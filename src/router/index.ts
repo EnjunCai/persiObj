@@ -17,15 +17,7 @@ const routes = [
     path: "/study",
     name: "study",
     component: () => import("../views/study/index.vue"),
-    redirect: "/study/tree",
-
-    children: [
-      {
-        path: "/study/tree",
-        name: "tree",
-        component: () => import("../views/study/Tree/index.vue"),
-      },
-    ],
+    // redirect: "/study/tree",
   },
 
   {

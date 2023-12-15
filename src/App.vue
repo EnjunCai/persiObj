@@ -12,7 +12,7 @@
           :key="item.id"
           @click="navClick(item.router, index)"
           :class="{
-            active: navIndex == index,
+            active: route.path == item.router,
           }"
         >
           {{ item.title }}
