@@ -1,6 +1,11 @@
 <template>
   <div class="wrapper">
-    <div class="card-wrapper" v-for="item in list" :key="item.id">
+    <div
+      class="card-wrapper"
+      v-for="item in list"
+      :key="item.id"
+      @click="navClick(item.router)"
+    >
       <div class="card">
         <div class="title">{{ item.title }}</div>
         <div class="card__content">
@@ -25,63 +30,18 @@ const list = reactive([
   {
     id: "list1",
     title: "树结构+手风琴",
-    router: "/study/tree",
+    router: "/tree",
     text: "一个树结构的展开，主要展示的是高度不确定，从0到自适应高度让transition生效",
   },
   {
     id: "list2",
+    title: "大屏响应式echarts",
+    router: "/resize",
+  },
+  {
+    id: "list2",
     title: "其他",
-    router: "/study/1",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
-  },
-  {
-    id: "list3",
-    title: "11",
-    router: "/study/2",
+    router: "/study/resize",
   },
 ]);
 const msg = ref("study");
