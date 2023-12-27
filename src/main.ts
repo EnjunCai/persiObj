@@ -4,4 +4,14 @@ import "./styles/global.scss";
 import App from "./App.vue";
 import router from "./router";
 
-createApp(App).use(router).mount("#app");
+import "@/assets/iconfont/iconfont.css";
+import "@/assets/iconfont/iconfont.js";
+
+import Icon from "@/components/Icon.vue";
+
+const app = createApp(App);
+
+app.use(router);
+app.component("Icon", Icon);
+
+app.mount("#app");

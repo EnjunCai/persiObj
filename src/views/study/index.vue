@@ -57,7 +57,7 @@ const navClick = function (link: string) {
   padding: 50px;
   // gap: 30px;
   flex-wrap: wrap;
-  width: calc(100vw - 350px);
+  // width: calc(100vw - 350px);
 }
 
 .card-wrapper {
@@ -81,6 +81,7 @@ const navClick = function (link: string) {
   .title {
     font-size: 24px;
     color: #333;
+    padding: 0 20px;
     font-weight: 700;
   }
 }

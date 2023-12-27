@@ -1,5 +1,3 @@
-
-
 <template>
   <!-- <h1>{{ msg }}</h1> -->
   <div class="global-wrapper">
@@ -22,13 +20,17 @@
         </li>
       </ul>
 
-      <div class="nav-bottom-text">一些说明描述内容</div>
+      <div class="nav-bottom-text">
+        一些说明描述内容
+        <Icon class="#icon-xiangsu_xiaoya" />
+      </div>
     </div>
     <div class="global-content">
       <router-view />
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -123,6 +125,9 @@ const changeTheme = (val: string) => {
 
 .global-content {
   // padding: 50px;
+  // width: calc(100vw - 350px);
+  // min-width: 1600px;
+  flex: 1;
 }
 </style>
 
