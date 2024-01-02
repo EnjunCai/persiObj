@@ -31,7 +31,7 @@ interface ResponseData {
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: "xxxxxx:8080", // api的base_url
+  // baseURL: "xxxxxx:8080", // api的base_url
   timeout: 6000, // 请求超时时间
 });
 // 请求拦截器

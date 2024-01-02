@@ -13,4 +13,10 @@ export default defineConfig({
       },
     ],
   },
+  server: {
+    proxy: {
+      "/api": "http://mobilecdnbj.kugou.com",
+    },
+    cors: true,
+  },
 });

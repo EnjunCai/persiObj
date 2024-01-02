@@ -10,14 +10,11 @@
 import StudyNavbarVue from "../../../components/StudyNavbar.vue";
 import { ref, onMounted } from "vue";
 // import {tq} from '@/axios/api'
-import { wyTop } from "@/axios/api/test";
+
 //  按需引入 echarts
 import * as echarts from "echarts";
 const main = ref(); // 使用ref创建虚拟DOM引用，使用时用main.value
 onMounted(() => {
-  wyTop().then((res) => {
-    console.log(res);
-  });
   // 基于准备好的dom，初始化echarts实例
   var myChart = echarts.init(main.value);
   window.addEventListener("resize", () => {

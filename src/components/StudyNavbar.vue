@@ -31,4 +31,8 @@ const back = () => {
     opacity: 1;
   }
 }
+.main {
+  background: var(--bg-color);
+  // height: 100vh;
+}
 </style>

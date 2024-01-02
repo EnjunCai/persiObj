@@ -39,7 +39,13 @@ const list = reactive([
     router: "/resize",
   },
   {
-    id: "list2",
+    id: "list3",
+    title: "网易云top音乐",
+    router: "/music",
+    text: "自定义音乐播放器，全局可播放",
+  },
+  {
+    id: "list111",
     title: "其他",
     router: "/study/resize",
   },

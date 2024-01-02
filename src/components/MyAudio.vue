@@ -2,7 +2,7 @@
   <audio
     controls
     ref="audio"
-    src="https://music.163.com/song/media/outer/url?id=2108599194"
+    :src="CurrentMusicSrc"
     @pause="onPause"
     @play="onPlay"
     @loadstart="onLoadstart"
@@ -13,9 +13,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, reactive } from "vue";
+import { MusicInfo } from "@/views/study/music/musicInfo";
+
+import { ref, Ref, reactive, watch, watchEffect } from "vue";
 const audio = ref();
 
+import useMusicStore from "@/store/musicStore";
+
+const useMusicStoreData = useMusicStore();
+console.log(useMusicStoreData.currentMusic);
+let CurrentMusicSrc = ref("");
 // 当前时间
 let MusiccurrentTime: Ref<number> = ref();
 // 歌曲总时间
@@ -45,6 +52,27 @@ const onLoadedmetadata = () => {
   }
   audio.value.volume = volumes.value / 100;
 };
+
+watchEffect(() => {
+  if (audio.value) {
+    audio.value.src = useMusicStoreData.currentMusic.play;
+    audio.value.play();
+  }
+});
+// watch(
+//   () => useMusicStoreData.currentMusic,
+//   (newSrc: MusicInfo, oldSrc) => {
+//     // 处理状态变化
+//     // console.log(`Count 变化了：${oldCount} -> ${newCount}`);
+//     if (audio.value) {
+//       audio.value.src = newSrc.play;
+//       audio.value.play();
+//     }
+//   },
+//   {
+//     deep: true,
+//   }
+// );
 </script>
 
 <style scoped>

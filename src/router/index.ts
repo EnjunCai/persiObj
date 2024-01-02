@@ -19,7 +19,11 @@ const routes = [
     name: "resize",
     component: () => import("../views/study/resize/index.vue"),
   },
-
+  {
+    path: "/music",
+    name: "music",
+    component: () => import("../views/study/music/index.vue"),
+  },
   {
     path: "/:catchAll(.*)",
     name: "not-found",

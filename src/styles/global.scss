@@ -20,3 +20,24 @@
 body {
   min-width: 1600px;
 }
+
+/* 修改全局滚动条样式 */
+::-webkit-scrollbar {
+  width: 12px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+  // background: #f1f1f1;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #c7d4e2;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #abb9c8;
+}
