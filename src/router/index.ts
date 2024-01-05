@@ -25,6 +25,11 @@ const routes = [
     component: () => import("../views/study/music/index.vue"),
   },
   {
+    path: "/tree",
+    name: "tree",
+    component: () => import("../views/study/tree/index.vue"),
+  },
+  {
     path: "/:catchAll(.*)",
     name: "not-found",
     component: () => import("../views/404.vue"),

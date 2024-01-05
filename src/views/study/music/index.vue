@@ -54,8 +54,9 @@ const playMusic = (item: MusicInfo, index: number) => {
 
 <style scoped>
 .content {
-  padding: 100px 50px;
-  height: 100vh;
+  /* padding: 100px 50px;
+  height: 100vh; */
+  height: 100%;
   .music-top100 {
     width: 30%;
     height: 100%;

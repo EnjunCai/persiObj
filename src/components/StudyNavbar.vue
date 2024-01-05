@@ -33,6 +33,8 @@ const back = () => {
 }
 .main {
   background: var(--bg-color);
+  padding: 100px 50px;
+  height: 100vh;
   // height: 100vh;
 }
 </style>
