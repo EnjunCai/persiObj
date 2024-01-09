@@ -2,37 +2,7 @@
 <template>
   <StudyNavbarVue>
     <template v-slot:main>
-      <div class="content" @click.stop="contentClick">
-        <div v-for="(m, mI) in list.moduleList" :key="m.mId" class="moduleBox">
-          <div class="card" data-type="module" :data-id="m.mId">
-            {{ m.title }}
-          </div>
-          <!-- v-show="!!currentMId && currentMId == m.mId" -->
-          <div
-            class="lessonList"
-            :id="m.mId + '-module'"
-            v-show="!!currentMId && currentMId == m.mId"
-          >
-            <div v-for="(l, lI) in m.lessonList" :key="l.lId" class="lessonBox">
-              <div class="card" data-type="lesson" :data-id="l.lId">
-                {{ l.title }}
-              </div>
-              <!-- v-show="!!currentLId && currentLId == l.lId" -->
-              <div
-                class="stepList"
-                :id="l.lId + '-lesson'"
-                v-show="!!currentLId && currentLId == l.lId"
-              >
-                <div v-for="(s, sI) in l.stepList" :key="s.sId" class="stepBox">
-                  <div class="card" data-type="step" :data-id="s.sId">
-                    {{ s.title }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <mTree :options="list2.moduleList" />
     </template>
   </StudyNavbarVue>
 </template>
@@ -40,58 +10,79 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import StudyNavbarVue from "@/components/StudyNavbar.vue";
+import mTree from "@/views/study/tree/components/mTree.vue";
 
-const currentMId = ref<string | undefined>("");
-const currentLId = ref<string | undefined>("");
+const currentMId = ref<string | undefined>("1");
+const currentLId = ref<string | undefined>("1-2");
 const currentSId = ref<string | undefined>("");
 
-const list = ref({
+const list2 = ref({
   classId: "xcv",
   moduleList: [
     {
-      mId: "1",
+      id: "1",
       title: "module1 ",
-      lessonList: [
+      children: [
         {
-          lId: "1-1",
+          id: "1-1",
           title: "lesson1 ",
         },
         {
-          lId: "1-2",
+          id: "1-2",
           title: "lesson2 ",
-          stepList: [
+          children: [
             {
-              sId: "1-2-1",
+              id: "1-2-1",
               title: "step 1",
             },
             {
-              sId: "1-2-2",
+              id: "1-2-2",
               title: "step 2",
             },
             {
-              sId: "1-2-3",
+              id: "1-2-3",
+              title: "step 3",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "2",
+      title: "module1 ",
+      children: [
+        {
+          id: "2-1",
+          title: "lesson1 ",
+          children: [
+            {
+              id: "2-2-1",
+              title: "step 1",
+            },
+            {
+              id: "2-2-2",
+              title: "step 2",
+            },
+            {
+              id: "2-2-3",
               title: "step 3",
             },
           ],
         },
         {
-          lId: "1-3",
-          title: "lesson3 ",
-        },
-        {
-          lId: "1-4",
-          title: "lesson4",
-          stepList: [
+          id: "2-2",
+          title: "lesson2 ",
+          children: [
             {
-              sId: "1-4-1",
+              id: "2-2-1",
               title: "step 1",
             },
             {
-              sId: "1-4-2",
+              id: "2-2-2",
               title: "step 2",
             },
             {
-              sId: "1-4-3",
+              id: "2-2-3",
               title: "step 3",
             },
           ],
@@ -100,44 +91,6 @@ const list = ref({
     },
   ],
 });
-
-const contentClick = (e: Event) => {
-  const { type, id } = (e.target as HTMLDivElement).dataset;
-  console.log(type, id);
-
-  let clickDom: HTMLElement | null | undefined = null;
-
-  let isOpen = true;
-  switch (type) {
-    case "module":
-      currentMId.value = currentMId.value === id ? "" : id;
-      // clickDom = document.getElementById(`${id}-module`);
-      // isOpen = currentMId.value === id;
-      break;
-    case "lesson":
-      currentLId.value = currentLId.value === id ? "" : id;
-      // clickDom = document.getElementById(`${id}-lesson`);
-      // isOpen = currentLId.value === id;
-
-      break;
-    case "step":
-      currentSId.value = currentSId.value ? "" : id;
-      break;
-  }
-
-  // if (isOpen) {
-  //   clickDom.style.height = "auto";
-  //   const { height } = clickDom?.getBoundingClientRect();
-  //   clickDom.style.height = "0";
-  //   clickDom.style.transition = ".3s";
-  //   clickDom?.offsetHeight;
-  //   console.log(clickDom, height);
-  //   // console.log(clickDom?.getBoundingClientRect());
-  //   clickDom.style.height = height + "px";
-  // } else {
-  //   clickDom.style.height = 0 + "px";
-  // }
-};
 </script>
 
 <style scoped lang="scss">
@@ -153,14 +106,22 @@ const contentClick = (e: Event) => {
       padding: 20px;
       border-radius: 20px;
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
     }
   }
 
   .stepList,
   .lessonList {
-    // transition: all 0.3s;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: all 0.3s;
+    min-height: 0;
     // height: 0;
     // overflow: hidden;
+    & > div {
+      overflow: hidden;
+    }
   }
 }
 </style>
