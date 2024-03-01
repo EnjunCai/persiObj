@@ -1,4 +1,9 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory,
+  RouteRecordRaw,
+  createWebHistory,
+} from "vue-router";
 
 const routes = [
   {
@@ -30,6 +35,17 @@ const routes = [
     component: () => import("../views/study/tree/index.vue"),
   },
   {
+    path: "/rightClick",
+    name: "rightClick",
+    component: () => import("../views/study/rightClick/index.vue"),
+  },
+  {
+    path: "/fullPage",
+    name: "fullPage",
+    component: () => import("../views/study/fullPage/index.vue"),
+  },
+
+  {
     path: "/:catchAll(.*)",
     name: "not-found",
     component: () => import("../views/404.vue"),
@@ -37,7 +53,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 

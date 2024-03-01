@@ -12,10 +12,6 @@ import { ref } from "vue";
 import StudyNavbarVue from "@/components/StudyNavbar.vue";
 import mTree from "@/views/study/tree/components/mTree.vue";
 
-const currentMId = ref<string | undefined>("1");
-const currentLId = ref<string | undefined>("1-2");
-const currentSId = ref<string | undefined>("");
-
 const list2 = ref({
   classId: "xcv",
   moduleList: [
@@ -58,6 +54,7 @@ const list2 = ref({
             {
               id: "2-2-1",
               title: "step 1",
+              isChecked: true,
             },
             {
               id: "2-2-2",

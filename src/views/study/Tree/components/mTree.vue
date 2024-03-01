@@ -1,16 +1,19 @@
 <template>
   <div v-for="(item, index) in newOptions" :key="item.id" class="Box">
-    <div class="card" :data-id="item.id" @click.stop="openC(item)">
-      {{ item.title }}
+    <div class="titleBox">
+      <div v-show="!!item.isChecked"><Icon class="#icon-xiangsu_xiaoya" /></div>
+      <div class="card" :data-id="item.id" @click.stop="openC(item)">
+        {{ item.title }}
 
-      <div
-        v-if="item.children && !!item.children.length"
-        :style="{
-          transform: !item.isOpen ? 'rotate(0deg)' : 'rotate(180deg)',
-          transition: 'all .3s',
-        }"
-      >
-        <Icon class="#icon-quanzhankai" />
+        <div
+          v-if="item.children && !!item.children.length"
+          :style="{
+            transform: !item.isOpen ? 'rotate(0deg)' : 'rotate(180deg)',
+            transition: 'all .3s',
+          }"
+        >
+          <Icon class="#icon-quanzhankai" />
+        </div>
       </div>
     </div>
     <div
@@ -47,8 +50,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const newOptions = ref(props.options);
 
-const openC = (item) => {
-  console.log(newOptions);
+const openC = (item: options) => {
+  // console.log(newOptions);
 
   if (item.isOpen) {
     item.isOpen = false;
@@ -60,7 +63,9 @@ const openC = (item) => {
         for (let j of i.children) {
           j.isOpen = false;
         }
-        item.children[0].isOpen = true;
+        if (item.children) {
+          item.children[0].isOpen = true;
+        }
       }
     }
     item.isOpen = !item.isOpen;
@@ -69,6 +74,10 @@ const openC = (item) => {
 </script>
 
 <style scoped lang="scss">
+.titleBox {
+  display: flex;
+  align-items: center;
+}
 .Box {
   padding-left: 20px;
   margin: 5px 0;
@@ -80,6 +89,7 @@ const openC = (item) => {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
+    flex: 1;
   }
 
   .list {

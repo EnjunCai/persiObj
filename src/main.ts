@@ -11,10 +11,31 @@ import "@/assets/iconfont/iconfont.js";
 
 import Icon from "@/components/Icon.vue";
 
+import Toast from "@/components/Toast.vue";
+
 const app = createApp(App);
 
 app.use(router);
 app.use(pinia);
+
 app.component("Icon", Icon);
 
+app.provide("toast", Toast);
+
+document.addEventListener;
 app.mount("#app");
+
+// const getQueryParams = () => {
+//   // @return obj // 所有query组成的对象
+//   let url = window.location.href;
+//   let params = url.split("?")[1].split("&");
+//   let obj = {};
+//   for (let i = 0; i < params.length; i++) {
+//     let item = params[i].split("=");
+//     obj[item[0]] = item[1];
+//   }
+
+//   return obj;
+// };
+
+// console.log(getQueryParams());

@@ -45,6 +45,18 @@ const list = reactive([
     text: "自定义音乐播放器，全局可播放",
   },
   {
+    id: "list4",
+    title: "右键菜单组件",
+    router: "/rightClick",
+    text: "右键菜单组件",
+  },
+  {
+    id: "list5",
+    title: "使用fullpage库",
+    router: "/fullPage",
+    text: "全屏分页的效果，不能商用，需要花钱",
+  },
+  {
     id: "list111",
     title: "其他",
     router: "/study/resize",

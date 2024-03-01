@@ -1,9 +1,9 @@
 <template>
   <router-view />
 
-  <div class="audio-wrapper">
+  <!-- <div class="audio-wrapper">
     <MyAudio />
-  </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
