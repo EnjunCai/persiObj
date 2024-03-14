@@ -103,6 +103,7 @@ onMounted(() => {
   padding: 40px 40px;
   color: var(--text-color);
   box-shadow: 0 4px 8px #0000001a;
+  width: 100%;
 
   .logo {
     padding: 10px;

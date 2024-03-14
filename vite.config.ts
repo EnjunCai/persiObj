@@ -14,6 +14,28 @@ export default defineConfig({
   cacheDir: "node_modules/.vite",
   // 构建输出配置
   build: {
+    chunkSizeWarningLimit: 1000, // 单个模块文件大小限制1000KB
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // 静态资源拆分
+          if (id.includes("node_modules")) {
+            return id
+              .toString()
+              .split("node_modules/")[1]
+              .split("/")[0]
+              .toString();
+          }
+        },
+      },
+    },
+
     outDir: "./dist",
     target: "modules",
     assetsDir: "assets",
@@ -29,6 +51,7 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
   ],
+
   resolve: {
     alias: [
       {

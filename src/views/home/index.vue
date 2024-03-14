@@ -20,11 +20,14 @@
       </div>
     </div>
     <div class="info_wrapper">
-      <div class="info_text">
+      <div class="info_text" v-observe="{ animationName: 'activeObserve' }">
         Hello!
         我是休息休息嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻我是休息休息嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻
       </div>
-      <div class="info_img">
+      <div
+        class="info_img"
+        v-observe="{ animationName: 'activeObserve', move: 'right' }"
+      >
         <el-image style="width: 600px" :src="infoUrl" />
       </div>
     </div>
