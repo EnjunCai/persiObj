@@ -16,22 +16,23 @@
 import { MusicInfo } from "@/views/study/music/musicInfo";
 
 import { ref, Ref, reactive, watch, watchEffect } from "vue";
-const audio = ref();
 
 import useMusicStore from "@/store/musicStore";
+
+const audio = ref();
 
 const useMusicStoreData = useMusicStore();
 console.log(useMusicStoreData.currentMusic);
 let CurrentMusicSrc = ref("");
-// 当前时间
-let MusiccurrentTime: Ref<number> = ref();
-// 歌曲总时间
-let Musicduration: Ref<number> = ref();
-// 进度条
-let progress: Ref<number> = ref();
+// // 当前时间
+// let MusiccurrentTime: Ref<number> = ref();
+// // 歌曲总时间
+// let Musicduration: Ref<number> = ref();
+// // 进度条
+// let progress: Ref<number> = ref();
 
-// 默认暂停状态
-let playing: Ref<boolean> = false;
+// // 默认暂停状态
+// let playing: Ref<boolean> = false;
 
 // 歌曲音量
 let volumes: Ref<number> = ref(70);

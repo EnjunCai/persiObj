@@ -20,27 +20,31 @@
 body {
   // min-width: 1600px;
 }
+img {
+  pointer-events: none;
+  user-select: none;
+}
 
 /* 修改全局滚动条样式 */
-::-webkit-scrollbar {
-  width: 12px;
-  border-radius: 4px;
-}
+// ::-webkit-scrollbar {
+//   width: 12px;
+//   border-radius: 4px;
+// }
 
-::-webkit-scrollbar-track {
-  border-radius: 4px;
-  // background: #f1f1f1;
-  background: transparent;
-}
+// ::-webkit-scrollbar-track {
+//   border-radius: 4px;
+//   // background: #f1f1f1;
+//   background: transparent;
+// }
 
-::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  background: #c7d4e2;
-}
+// ::-webkit-scrollbar-thumb {
+//   border-radius: 6px;
+//   background: #acb1ec;
+// }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #abb9c8;
-}
+// ::-webkit-scrollbar-thumb:hover {
+//   background: #4e5064;
+// }
 @font-face {
   font-family: 'WenQuanDengKuanWeiMiHei'; /* 将YourCustomFont替换为你的字体名称 */
   src: url('../assets/font/WenQuanDengKuanWeiMiHei-1.ttf') format('opentype'); /* 根据你的文件路径和格式来修改 */

@@ -2,7 +2,6 @@
   <StudyNavbarVue>
     <template v-slot:main>
       <div class="content">
-        <button @click="showToast">Show Toast</button>
         <div class="music-top100">
           <div
             v-for="(item, index) in musicTopList"
@@ -32,14 +31,6 @@ import { ref, onMounted, reactive, inject } from "vue";
 import useMusicStore from "@/store/musicStore";
 
 const useMusicStoreData = useMusicStore();
-
-const toast: any = inject("toast");
-
-const showToast = () => {
-  console.log(toast);
-
-  toast.show("This is a toast message");
-};
 
 let musicTopList = ref<MusicInfo[]>([]);
 sjMusic().then((res) => {

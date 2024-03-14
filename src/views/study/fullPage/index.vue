@@ -22,27 +22,25 @@
 </template>
 
 <script setup lang="ts">
-import fullpage from "fullpage.js";
+// import fullpage from "fullpage.js";
 import StudyNavbarVue from "@/components/StudyNavbar.vue";
 import { defineComponent, ref, onMounted } from "vue";
 
-const fullpageRef = ref<HTMLElement | null>(null);
-console.log(fullpageRef, 123);
+// const fullpageRef = ref<HTMLElement | null>(null);
+// console.log(fullpageRef, 123);
 
 onMounted(() => {
-  console.log(fullpageRef, 123);
-
-  if (fullpageRef.value) {
-    console.log(fullpage);
-
-    new fullpage(fullpageRef.value, {
-      // 在这里配置fullpage.js的选项
-      sectionsColor: ["#f2f2f2", "#4BBFC3", "#7BAABE"],
-      navigation: true,
-      anchors: ["section1", "section2", "section3"],
-      menu: "#menu",
-    });
-  }
+  // console.log(fullpageRef, 123);
+  // if (fullpageRef.value) {
+  //   console.log(fullpage);
+  //   new fullpage(fullpageRef.value, {
+  //     // 在这里配置fullpage.js的选项
+  //     sectionsColor: ["#f2f2f2", "#4BBFC3", "#7BAABE"],
+  //     navigation: true,
+  //     anchors: ["section1", "section2", "section3"],
+  //     menu: "#menu",
+  //   });
+  // }
 });
 </script>
 

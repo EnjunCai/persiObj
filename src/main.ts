@@ -2,6 +2,7 @@ import { createApp } from "vue";
 // import "./style.css";
 import "./styles/global.scss";
 import App from "./App.vue";
+
 import router from "./router";
 
 import pinia from "./store";
@@ -11,16 +12,16 @@ import "@/assets/iconfont/iconfont.js";
 
 import Icon from "@/components/Icon.vue";
 
-import Toast from "@/components/Toast.vue";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
 
 const app = createApp(App);
 
 app.use(router);
 app.use(pinia);
+app.use(ElementPlus);
 
 app.component("Icon", Icon);
-
-app.provide("toast", Toast);
 
 document.addEventListener;
 app.mount("#app");

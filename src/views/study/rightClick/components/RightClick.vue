@@ -31,6 +31,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import useContainerMenu from "./useContainerMenu";
 export interface menus {
   id?: number | string;
   label: string;
@@ -38,9 +40,6 @@ export interface menus {
 interface Props {
   menus: Array<menus>;
 }
-
-import { ref } from "vue";
-import useContainerMenu from "./useContainerMenu";
 
 const props = withDefaults(defineProps<Props>(), {
   menus: () => [],

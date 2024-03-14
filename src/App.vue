@@ -1,5 +1,7 @@
 <template>
-  <router-view />
+  <div class="main_wrapper">
+    <router-view />
+  </div>
 
   <!-- <div class="audio-wrapper">
     <MyAudio />
@@ -7,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+import NavBar from "./components/NavBar.vue";
 import MyAudio from "@/components/MyAudio.vue";
 </script>
 
@@ -17,5 +20,9 @@ import MyAudio from "@/components/MyAudio.vue";
   left: 0;
   background: red;
   width: 100%;
+}
+
+.main_wrapper {
+  // padding-top: 130px;
 }
 </style>

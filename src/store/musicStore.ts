@@ -4,7 +4,7 @@ import { MusicInfo } from "@/views/study/music/musicInfo";
 
 const useMusicStore = defineStore("movie", {
   state: () => ({
-    musicList: [],
+    musicList: [] as MusicInfo[],
     currentMusic: {} as MusicInfo,
     currentIdx: "",
   }),
