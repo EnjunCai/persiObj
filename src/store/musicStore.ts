@@ -5,7 +5,7 @@ import { MusicInfo } from "@/views/study/music/musicInfo";
 const useMusicStore = defineStore("movie", {
   state: () => ({
     musicList: [] as MusicInfo[],
-    currentMusic: {} as MusicInfo,
+    currentMusic: {} as MusicInfo | null | undefined,
     currentIdx: "",
   }),
 
@@ -13,7 +13,7 @@ const useMusicStore = defineStore("movie", {
     setMusicList(newList: MusicInfo[]) {
       this.musicList = newList;
     },
-    setCurrentMusic(newData: MusicInfo) {
+    setCurrentMusic(newData: MusicInfo | null | undefined) {
       console.log(123);
 
       this.currentMusic = newData;

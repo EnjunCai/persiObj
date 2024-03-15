@@ -5,7 +5,11 @@ const activeIntersection = new IntersectionObserver((entries, observer) => {
     let target = entry.target as HTMLElement;
 
     if (entry.isIntersecting) {
-      entry.target.classList.add(target.dataset.active || "activeObserve");
+      if (target.dataset.move == "bottom") {
+        entry.target.classList.add(target.dataset.active || "activeObserveY");
+      } else {
+        entry.target.classList.add(target.dataset.active || "activeObserve");
+      }
 
       observer.unobserve(entry.target);
     } else {
@@ -21,10 +25,10 @@ const activeIntersection = new IntersectionObserver((entries, observer) => {
 
 export const observe = {
   mounted(el: HTMLElement, binding: DirectiveBinding) {
-    console.log(el, binding);
-
     if (binding.value.move == "right") {
       el.classList.add("defaultObserveRight");
+    } else if (binding.value.move == "bottom") {
+      el.classList.add("defaultObserveBottom");
     } else {
       el.classList.add("defaultObserve");
     }

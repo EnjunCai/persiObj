@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CheckTheme: typeof import('./src/components/CheckTheme.vue')['default']
     ElImage: typeof import('element-plus/es')['ElImage']
     Icon: typeof import('./src/components/Icon.vue')['default']
     MyAudio: typeof import('./src/components/MyAudio.vue')['default']

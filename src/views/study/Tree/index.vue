@@ -53,7 +53,7 @@ const list2 = ref({
           children: [
             {
               id: "2-2-1",
-              title: "step 1",
+              title: "step 1我是默认展开",
               isChecked: true,
             },
             {
@@ -96,7 +96,7 @@ const list2 = ref({
   .lessonBox,
   .stepBox {
     padding-left: 20px;
-    margin: 5px 0;
+    margin: 0 5px;
 
     .card {
       background: #fff;

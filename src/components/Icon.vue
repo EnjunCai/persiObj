@@ -1,5 +1,11 @@
 <template>
-  <svg class="icon" aria-hidden="true" :width="fontSize" :height="fontSize">
+  <svg
+    class="icon"
+    aria-hidden="true"
+    :style="{ width: fontSize, height: fontSize }"
+    :width="fontSize"
+    :height="fontSize"
+  >
     <use :xlink:href="class" :fill="color"></use>
   </svg>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="header" @click="back">返回</div>
+  <!-- <div class="header" @click="back">返回</div> -->
   <div class="main">
     <slot name="main"> </slot>
   </div>
@@ -44,8 +44,8 @@ const back = () => {
 }
 .main {
   background: var(--bg-color);
-  padding: 100px 50px;
-  height: 100vh;
+  // padding: 100px 50px;
+  // height: 100vh;
   // height: 100vh;
 }
 </style>

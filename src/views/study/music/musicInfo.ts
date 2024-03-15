@@ -1,5 +1,5 @@
 export interface MusicInfo {
-  mid: string;
-  name: string;
-  play: string;
+  mid?: string;
+  name?: string;
+  play?: string;
 }

@@ -15,5 +15,21 @@ import { useRouter, useRoute } from "vue-router";
 <style scoped lang="scss">
 .content_wrapper {
   padding-top: 130px;
+  // margin-top: 130px;
+}
+@media (max-width: 780px) {
+  .content_wrapper {
+    padding-top: 124px;
+  }
+}
+@media (max-width: 668px) {
+  .content_wrapper {
+    padding-top: 118px;
+  }
+}
+@media (max-width: 450px) {
+  .content_wrapper {
+    padding-top: 78px;
+  }
 }
 </style>

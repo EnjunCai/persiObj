@@ -38,6 +38,16 @@ const routes = [
         component: () => import("../views/study/tree/index.vue"),
       },
       {
+        path: "/navigation",
+        name: "navigation",
+        component: () => import("../views/navigation/index.vue"),
+      },
+      {
+        path: "/game",
+        name: "game",
+        component: () => import("../views/game/index.vue"),
+      },
+      {
         path: "/rightClick",
         name: "rightClick",
         component: () => import("../views/study/rightClick/index.vue"),

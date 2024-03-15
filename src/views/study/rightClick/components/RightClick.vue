@@ -90,11 +90,15 @@ const handleAfterEnter = (el: Element) => {
   position: fixed;
   background: #eee;
   padding: 10px;
-  border: 1px solid #000;
+  border: 1px solid #00000015;
   border-radius: 8px;
+  box-shadow: 0px 14px 40px 0px rgba(109, 141, 173, 0.25);
 
   .menuItem {
+    border-radius: 4px;
     margin: 5px 0;
+    padding: 2px 4px;
+    transition: all 0.3s;
     cursor: pointer;
     &:hover {
       background: #ccc;

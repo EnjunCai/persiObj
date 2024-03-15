@@ -13,13 +13,17 @@
 :root[data-theme='light'] {
   --bg-color: #1e293b;
   --text-color: #f0f6fc;
+  --text-AColor: #1e293b;
+
   --clear-color: #2563eb;
   --dull-color: #598ef3;
 }
-
+html {
+  background: var(--bg-color);
+}
 body {
   // min-width: 1600px;
-  overflow-x: hidden;
+  // overflow-x: hidden;
 }
 img {
   pointer-events: none;
@@ -47,11 +51,11 @@ img {
 //   background: #4e5064;
 // }
 @font-face {
-  font-family: 'WenQuanDengKuanWeiMiHei'; /* 将YourCustomFont替换为你的字体名称 */
-  src: url('../assets/font/WenQuanDengKuanWeiMiHei-1.ttf') format('opentype'); /* 根据你的文件路径和格式来修改 */
+  font-family: 'AlimamaShuHeiTi'; /* 将YourCustomFont替换为你的字体名称 */
+  src: url('../assets/font/AlimamaShuHeiTi-Bold.ttf') format('opentype'); /* 根据你的文件路径和格式来修改 */
 }
 div {
-  font-family: 'WenQuanDengKuanWeiMiHei', sans-serif;
+  font-family: 'AlimamaShuHeiTi', sans-serif;
 }
 
 .defaultObserve {
@@ -66,9 +70,24 @@ div {
   transition: all 1s;
   transform: translateX(100%);
 }
+
+.defaultObserveBottom {
+  opacity: 0;
+  filter: blur(5px);
+  transition: all 1s;
+  transform: translateY(100%);
+}
+
 .activeObserve {
   opacity: 1;
   filter: blur(0px);
 
   transform: translateX(0px);
+}
+
+.activeObserveY {
+  opacity: 1;
+  filter: blur(0px);
+
+  transform: translateY(0px);
 }

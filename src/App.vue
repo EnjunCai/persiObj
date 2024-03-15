@@ -3,9 +3,9 @@
     <router-view />
   </div>
 
-  <!-- <div class="audio-wrapper">
+  <div class="audio-wrapper">
     <MyAudio />
-  </div> -->
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -18,7 +18,6 @@ import MyAudio from "@/components/MyAudio.vue";
   position: fixed;
   bottom: 0;
   left: 0;
-  background: red;
   width: 100%;
 }
 

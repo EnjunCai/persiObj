@@ -40,26 +40,15 @@ const list = reactive([
   },
   {
     id: "list3",
-    title: "网易云top音乐",
+    title: "音乐",
     router: "/music",
-    text: "自定义音乐播放器，全局可播放",
+    text: "自定义音乐播放器",
   },
   {
     id: "list4",
     title: "右键菜单组件",
     router: "/rightClick",
     text: "右键菜单组件",
-  },
-  {
-    id: "list5",
-    title: "使用fullpage库",
-    router: "/fullPage",
-    text: "全屏分页的效果，不能商用，需要花钱",
-  },
-  {
-    id: "list111",
-    title: "其他",
-    router: "/study/resize",
   },
 ]);
 const msg = ref("study");
@@ -75,19 +64,20 @@ const navClick = function (link: string) {
   padding: 50px;
   // gap: 30px;
   flex-wrap: wrap;
+  // justify-content: space-around;
   // width: calc(100vw - 350px);
 }
 
 .card-wrapper {
   padding: 20px;
 
-  width: 20%;
+  width: 33.333%;
 }
 .card {
   position: relative;
 
   height: 200px;
-  background: linear-gradient(-45deg, #f89b29 0%, #ff0f7b 100%);
+  background: linear-gradient(-45deg, #bce0c9 0%, #599e8d 100%);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -141,5 +131,11 @@ const navClick = function (link: string) {
   font-size: 14px;
   color: #777;
   line-height: 1.4;
+}
+
+@media (max-width: 730px) {
+  .card-wrapper {
+    width: 100%;
+  }
 }
 </style>

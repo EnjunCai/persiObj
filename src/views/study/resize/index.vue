@@ -1,7 +1,21 @@
 <template>
   <StudyNavbarVue>
     <template v-slot:main>
-      <div ref="main" style="width: 100%; height: 400px"></div>
+      <div class="content">
+        <div class="left">
+          <div class="top">1</div>
+          <div class="middle">2</div>
+          <div class="bottom">3</div>
+        </div>
+        <div class="center">
+          <div ref="main" style="width: 100%; height: 400px"></div>
+        </div>
+        <div class="right">
+          <div class="top">1</div>
+          <div class="middle">2</div>
+          <div class="bottom">3</div>
+        </div>
+      </div>
     </template>
   </StudyNavbarVue>
 </template>
@@ -46,7 +60,32 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.content {
+  display: flex;
+  width: 100vw;
+  height: 80vh;
+
+  .left,
+  .right {
+    width: 20vw;
+    .top {
+      height: 30%;
+      background: palegoldenrod;
+    }
+    .middle {
+      height: 40%;
+      background: paleturquoise;
+    }
+    .bottom {
+      height: 30%;
+      background: darkgrey;
+    }
+  }
+  .center {
+    width: 60vw;
+  }
+}
 </style>
 
 

@@ -1,15 +1,27 @@
 <template>
-  <audio
-    controls
-    ref="audio"
-    :src="CurrentMusicSrc"
-    @pause="onPause"
-    @play="onPlay"
-    @loadstart="onLoadstart"
-    @timeupdate="getCurr"
-    @canplay="onLoadedmetadata"
-  ></audio>
-  123213
+  <div
+    class="audioWrapper"
+    :style="{
+      transform: !isShow ? 'translateY(57px)' : 'translateY(0)',
+      opacity: isShow ? 1 : 0.6,
+    }"
+    @mouseenter="moveEnter"
+    @mouseleave="mouseLeave"
+  >
+    <div class="closeMusic" @click="closeMusic">X</div>
+    <div v-if="useMusicStoreData.currentMusic?.play" style="margin-top: 7px">
+      <audio
+        controls
+        ref="audio"
+        :src="CurrentMusicSrc"
+        @pause="onPause"
+        @play="onPlay"
+        @loadstart="onLoadstart"
+        @timeupdate="getCurr"
+        @canplay="onLoadedmetadata"
+      ></audio>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +32,9 @@ import { ref, Ref, reactive, watch, watchEffect } from "vue";
 import useMusicStore from "@/store/musicStore";
 
 const audio = ref();
+
+const isShow = ref(false);
+const timer = ref();
 
 const useMusicStoreData = useMusicStore();
 console.log(useMusicStoreData.currentMusic);
@@ -54,29 +69,48 @@ const onLoadedmetadata = () => {
   audio.value.volume = volumes.value / 100;
 };
 
+const closeMusic = () => {
+  useMusicStoreData.currentMusic = null;
+};
+
+const moveEnter = () => {
+  console.log(123);
+
+  isShow.value = true;
+  clearTimeout(timer.value);
+};
+
+const mouseLeave = () => {
+  isShow.value = false;
+};
+
 watchEffect(() => {
   if (audio.value) {
-    audio.value.src = useMusicStoreData.currentMusic.play;
+    isShow.value = true;
+    audio.value.src = useMusicStoreData.currentMusic?.play;
     audio.value.play();
+    timer.value = setTimeout(() => {
+      isShow.value = false;
+    }, 3000);
   }
 });
-// watch(
-//   () => useMusicStoreData.currentMusic,
-//   (newSrc: MusicInfo, oldSrc) => {
-//     // 处理状态变化
-//     // console.log(`Count 变化了：${oldCount} -> ${newCount}`);
-//     if (audio.value) {
-//       audio.value.src = newSrc.play;
-//       audio.value.play();
-//     }
-//   },
-//   {
-//     deep: true,
-//   }
-// );
 </script>
 
 <style scoped>
+.audioWrapper {
+  background: var(--detail-color);
+
+  padding-top: 7px;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.closeMusic {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  top: 50%;
+}
 audio {
   /* width: 100px;
   height: 100px; */
