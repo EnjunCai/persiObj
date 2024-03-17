@@ -12,16 +12,21 @@ import "@/assets/iconfont/iconfont.js";
 
 import Icon from "@/components/Icon.vue";
 
-import ElementPlus from "element-plus";
+// import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 
 import { observe } from "./direactives";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 const app = createApp(App);
 
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component);
+}
+
 app.use(router);
 app.use(pinia);
-app.use(ElementPlus);
+// app.use(ElementPlus);
 app.directive("observe", observe);
 
 app.component("Icon", Icon);

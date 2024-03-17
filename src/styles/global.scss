@@ -26,8 +26,13 @@ body {
   // overflow-x: hidden;
 }
 img {
-  pointer-events: none;
-  user-select: none;
+  // pointer-events: none;
+  // user-select: none;
+}
+
+a {
+  text-decoration: none;
+  color: #4e5064;
 }
 
 /* 修改全局滚动条样式 */

@@ -22,11 +22,7 @@ const routes = [
         name: "study",
         component: () => import("../views/study/index.vue"),
       },
-      {
-        path: "/resize",
-        name: "resize",
-        component: () => import("../views/study/resize/index.vue"),
-      },
+
       {
         path: "/music",
         name: "music",
@@ -53,11 +49,32 @@ const routes = [
         component: () => import("../views/study/rightClick/index.vue"),
       },
       {
+        path: "/lotteryDraw",
+        name: "lotteryDraw",
+        component: () => import("../views/study/lotteryDraw/index.vue"),
+      },
+      {
+        path: "/imagesChangeBg",
+        name: "imagesChangeBg",
+        component: () => import("../views/study/imagesChangeBg/index.vue"),
+      },
+      {
+        path: "/waterFullPage",
+        name: "waterFullPage",
+        component: () => import("../views/study/waterFullPage/index.vue"),
+      },
+
+      {
         path: "/fullPage",
         name: "fullPage",
         component: () => import("../views/study/fullPage/index.vue"),
       },
     ],
+  },
+  {
+    path: "/resize",
+    name: "resize",
+    component: () => import("../views/study/resize/index.vue"),
   },
 
   {

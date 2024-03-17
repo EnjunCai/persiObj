@@ -35,20 +35,39 @@ const list = reactive([
   },
   {
     id: "list2",
-    title: "大屏响应式echarts",
+    title: "大屏响应式，使用scale实现，简化版本",
     router: "/resize",
   },
   {
     id: "list3",
     title: "音乐",
     router: "/music",
-    text: "自定义音乐播放器",
+    text: "自定义音乐播放器（进行中）",
   },
   {
     id: "list4",
     title: "右键菜单组件",
     router: "/rightClick",
     text: "右键菜单组件",
+  },
+
+  {
+    id: "list5",
+    title: "抽奖",
+    router: "/lotteryDraw",
+    text: "几种抽奖模式",
+  },
+  {
+    id: "list6",
+    title: "移入到图片让背景颜色改变",
+    router: "/imagesChangeBg",
+    text: "用到color-thief这个组件库获取这个图片的所有主要颜色，然后取前几个进行渐变效果设置",
+  },
+  {
+    id: "list7",
+    title: "瀑布流",
+    router: "/waterFullPage",
+    text: "封装瀑布流",
   },
 ]);
 const msg = ref("study");

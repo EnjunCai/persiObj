@@ -1,89 +1,115 @@
 <template>
-  <StudyNavbarVue>
-    <template v-slot:main>
-      <div class="content">
-        <div class="left">
-          <div class="top">1</div>
-          <div class="middle">2</div>
-          <div class="bottom">3</div>
+  <div class="resize_wrapper">
+    <div class="back_class">
+      <Back />
+    </div>
+    <div style="height: 100vh; width: 100vw; overflow: hidden">
+      <Screen :width="1920" :height="1080">
+        <div class="content_wrapper">
+          <div class="header">可视化大屏</div>
+          <div class="content">
+            <div class="left">
+              <div class="top">
+                <SvgImg />
+                <BarChart />
+              </div>
+
+              <div class="middle"><SvgImg /><BarChart /></div>
+
+              <div class="bottom"><SvgImg /><BarChart /></div>
+            </div>
+            <div class="center"></div>
+            <div class="right">
+              <div class="top"><SvgImg /><BarChart /></div>
+
+              <div class="middle"><SvgImg /><BarChart /></div>
+
+              <div class="bottom"><SvgImg /><BarChart /></div>
+            </div>
+          </div>
         </div>
-        <div class="center">
-          <div ref="main" style="width: 100%; height: 400px"></div>
-        </div>
-        <div class="right">
-          <div class="top">1</div>
-          <div class="middle">2</div>
-          <div class="bottom">3</div>
-        </div>
-      </div>
-    </template>
-  </StudyNavbarVue>
+      </Screen>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
+import Back from "@/components/Back.vue";
+import BarChart from "./components/BarChart.vue";
+import SvgImg from "./components/SvgImg.vue";
+import Screen from "@/components/Screen.vue";
 import StudyNavbarVue from "../../../components/StudyNavbar.vue";
-import { ref, onMounted } from "vue";
-// import {tq} from '@/axios/api'
 
-//  按需引入 echarts
-import * as echarts from "echarts";
-const main = ref(); // 使用ref创建虚拟DOM引用，使用时用main.value
-onMounted(() => {
-  // 基于准备好的dom，初始化echarts实例
-  var myChart = echarts.init(main.value);
-  window.addEventListener("resize", () => {
-    myChart.resize();
-  });
-  // 指定图表的配置项和数据
-  var option = {
-    title: {
-      text: "ECharts 入门示例",
-    },
-    tooltip: {},
-    legend: {
-      data: ["销量"],
-    },
-    xAxis: {
-      data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
-    },
-    yAxis: {},
-    series: [
-      {
-        name: "销量",
-        type: "bar",
-        data: [5, 20, 36, 10, 10, 20],
-      },
-    ],
-  };
-  // 使用刚指定的配置项和数据显示图表。
-  myChart.setOption(option);
+import { ref, onMounted, onBeforeMount, onUnmounted } from "vue";
+
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+onBeforeMount(() => {
+  document.documentElement.style.overflow = "hidden";
+  console.log();
+});
+onMounted(() => {});
+onUnmounted(() => {
+  document.documentElement.style.overflow = "";
 });
 </script>
 
 <style scoped lang="scss">
+.resize_wrapper {
+  background: url(/src/assets/images/resizeImage/pageBg.png) no-repeat;
+  position: relative;
+  .back_class {
+    position: absolute;
+    z-index: 9;
+    left: 30px;
+    top: 30px;
+    opacity: 0.7;
+    transition: all 0.3s;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.content_wrapper {
+  width: 100%;
+  height: 100%;
+  .header {
+    height: 64px;
+    background: url(/src/assets/images/resizeImage/top.png) no-repeat;
+    text-align: center;
+    line-height: 64px;
+    color: #fff;
+    font-size: 32px;
+    letter-spacing: 10px;
+  }
+}
 .content {
   display: flex;
-  width: 100vw;
-  height: 80vh;
+  width: 100%;
+  height: calc(100% - 64px);
+  padding: 0 20px;
 
   .left,
   .right {
-    width: 20vw;
-    .top {
-      height: 30%;
-      background: palegoldenrod;
-    }
+    // width: 20vw;
+    width: 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    .top,
+    .bottom,
     .middle {
-      height: 40%;
-      background: paleturquoise;
-    }
-    .bottom {
-      height: 30%;
-      background: darkgrey;
+      position: relative;
+      height: 310px;
+      width: 100%;
     }
   }
+
   .center {
-    width: 60vw;
+    // width: 60%;
+    flex: 1;
   }
 }
 </style>

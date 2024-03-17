@@ -7,13 +7,23 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Back: typeof import('./src/components/Back.vue')['default']
     CheckTheme: typeof import('./src/components/CheckTheme.vue')['default']
+    CustomImg: typeof import('./src/components/CustomImg.vue')['default']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
+    ElRadio: typeof import('element-plus/es')['ElRadio']
+    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     Icon: typeof import('./src/components/Icon.vue')['default']
     MyAudio: typeof import('./src/components/MyAudio.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Screen: typeof import('./src/components/Screen.vue')['default']
     StudyNavbar: typeof import('./src/components/StudyNavbar.vue')['default']
+    WaterFull: typeof import('./src/components/WaterFull/index.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

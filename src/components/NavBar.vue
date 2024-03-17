@@ -104,13 +104,33 @@ const barList = reactive([
         title: "11",
         router: "/fullPage",
       },
+      {
+        title: "11",
+        router: "/lotteryDraw",
+      },
+      {
+        title: "11",
+        router: "/imagesChangeBg",
+      },
+      {
+        title: "11",
+        router: "/waterFullPage",
+      },
     ],
   },
-  { id: 3, title: "学习", router: "/study" },
+  // { id: 3, title: "学习", router: "/study" },
   { id: 4, title: "导航中心", router: "/navigation" },
-  { id: 5, title: "休闲", router: "/game" },
+  // { id: 5, title: "休闲", router: "/game" },
   { id: 6, title: "其他", router: "/other" },
 ]);
+
+watch(
+  () => route.fullPath,
+  (to, from) => {
+    console.log("当前路由：", to);
+    setBgFn();
+  }
+);
 
 const navClick = function (link: string, index: number, e: Event) {
   if (screenWidth.value > 780) {
@@ -137,8 +157,6 @@ const setBgPosition = (index: number) => {
   bg.style.width = item.width + "px";
 };
 const checkMobileOpen = () => {
-  console.log(isOpenMobileBar.value);
-
   isOpenMobileBar.value = !isOpenMobileBar.value;
 };
 
@@ -169,22 +187,7 @@ const setBgFn = () => {
     setBgPosition(studyIndex);
   }
 };
-// const changeTheme = (val: string) => {
-//     switch (val) {
-//       case "black":
-//         window.document.documentElement.setAttribute("data-theme", "light");
-//         break;
-//       default:
-//         window.document.documentElement.removeAttribute("data-theme");
 
-//         break;
-//     }
-//     // if (val=='green') {
-//     //   window.document.documentElement.setAttribute("data-theme", "light");
-//     // } else {
-//     //   window.document.documentElement.removeAttribute("data-theme");
-//     // }
-//   };
 function handleResize() {
   screenWidth.value =
     window.innerWidth ||
@@ -359,7 +362,7 @@ onUnmounted(() => {
   padding: 130px 20px 0 20px;
   overflow: hidden;
   background: var(--bg-color);
-  z-index: 8;
+  z-index: 88;
   position: fixed;
   height: 0vh;
   // transform: translateY(-100%);
