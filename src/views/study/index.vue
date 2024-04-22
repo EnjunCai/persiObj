@@ -69,6 +69,37 @@ const list = reactive([
     router: "/waterFullPage",
     text: "封装瀑布流",
   },
+  {
+    id: "list8",
+    title: "卡片点击放大效果",
+    router: "/CardExpansion",
+    text: "卡片点击放大效果",
+  },
+
+  // {
+  //   id: "list9",
+  //   title: "哔哩哔哩首页中鼠标移动背景移动的效果(不支持移动端)",
+  //   router: "/bilibiliMouseMove",
+  //   text: "哔哩哔哩首页中鼠标移动背景移动的效果(不支持移动端)",
+  // },
+  {
+    id: "list10",
+    title: "自定义视频组件(开发中)",
+    router: "/video",
+    text: "自定义视频组件",
+  },
+  {
+    id: "list11",
+    title: "markDown编辑器",
+    router: "/markDown",
+    text: "markDown编辑器(采用组件)",
+  },
+  {
+    id: "list12",
+    title: "three的一些案例",
+    router: "/three",
+    text: "three基础案例",
+  },
 ]);
 const msg = ref("study");
 

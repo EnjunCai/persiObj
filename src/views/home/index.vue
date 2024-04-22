@@ -8,7 +8,7 @@
       </div>
       <div class="info_img">
         <!-- <el-image style="width: 600px" :src="infoUrl" /> -->
-        <el-image :src="infoUrl" lazy> </el-image>
+        <img src="/src/assets/images/taolun.svg" v-lazyLoad> </img>
       </div>
     </div>
 
@@ -21,7 +21,7 @@
         v-observe="{ animationName: 'activeObserve' }"
       >
         <div class="w7_img">
-          <img src="/src/assets/images/kira.jpg" />
+          <img src="/src/assets/images/kira.jpg" v-lazyLoad />
         </div>
         <div class="w7_text">
           <p>kira learning官网</p>
@@ -34,7 +34,7 @@
         v-observe="{ animationName: 'activeObserve' }"
       >
         <div class="w3_img">
-          <el-image :src="url4" />
+          <img src="/src/assets/images/kaifa.svg" v-lazyLoad />
         </div>
         <div class="w3_text">
           <p>学习案例</p>
@@ -43,9 +43,13 @@
       </div>
     </div>
     <div class="card_wrapper1">
-      <div class="w3" v-observe="{ animationName: 'activeObserve' }">
+      <div
+        class="w3"
+        v-observe="{ animationName: 'activeObserve' }"
+        @click="router.push('/navigation')"
+      >
         <div class="w3_img">
-          <el-image :src="url5" lazy />
+          <img src="/src/assets/images/2.5Dxuqiu.svg" v-lazyLoad />
         </div>
         <div class="w3_text">
           <p>导航</p>
@@ -55,7 +59,7 @@
       <a
         href="https://kira-learning.org/"
         target="_black"
-        class="w7"
+        class="w7 w7R"
         v-observe="{ animationName: 'activeObserve', move: 'right' }"
       >
         <div class="w7_text">
@@ -63,7 +67,7 @@
           负责大部分内容开发，包括登录、答题系统、答题创建、在线聊天、编辑器等等（目前没有账号，无法登陆）
         </div>
         <div class="w7_img">
-          <img src="/src/assets/images/kirapintai.jpg" />
+          <img src="/src/assets/images/kirapintai.jpg" v-lazyLoad />
         </div>
       </a>
     </div>
@@ -432,6 +436,14 @@ onUnmounted(() => {
     .w7 {
       flex: 1;
       width: 100%;
+    }
+
+    .w7 {
+      flex-direction: column;
+    }
+
+    .w7R {
+      flex-direction: column-reverse;
     }
   }
   .waterfall-container {

@@ -80,9 +80,10 @@ const openC = (item: options) => {
 }
 .Box {
   padding-left: 20px;
-  margin: 5px 0;
+  margin: 12px 0;
 
   .card {
+    box-shadow: 0px 4px 10px 0px rgba(109, 141, 173, 0.25);
     background: #fff;
     padding: 20px;
     border-radius: 20px;

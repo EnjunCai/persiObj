@@ -43,7 +43,7 @@ watch(
 const requestData = (page: number, pageSize: number): Promise<IImageItem[]> => {
   return new Promise<IImageItem[]>((resolve) => {
     fetch(
-      `https://www.vilipix.com/api/v1/picture/public?limit=${pageSize}&tags=%E7%B2%BE%E7%81%B5%E5%AE%9D%E5%8F%AF%E6%A2%A6&from=pc_web&sort=new&offset=${
+      `/api/v1/picture/public?limit=${pageSize}&tags=%E7%B2%BE%E7%81%B5%E5%AE%9D%E5%8F%AF%E6%A2%A6&from=pc_web&sort=new&offset=${
         --page * pageSize
       }`
       // `https://www.vilipix.com/api/v1/picture/public?limit=${pageSize}&sort=hot&offset=${

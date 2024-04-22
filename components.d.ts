@@ -8,12 +8,15 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Back: typeof import('./src/components/Back.vue')['default']
+    CardExpansion: typeof import('./src/components/CardExpansion/index.vue')['default']
     CheckTheme: typeof import('./src/components/CheckTheme.vue')['default']
     CustomImg: typeof import('./src/components/CustomImg.vue')['default']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
+    ElOption: typeof import('element-plus/es')['ElOption']
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     Icon: typeof import('./src/components/Icon.vue')['default']
     MyAudio: typeof import('./src/components/MyAudio.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']

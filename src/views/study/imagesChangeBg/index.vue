@@ -12,6 +12,7 @@
           :style="{
             opacity: hoverIndex == -1 ? 1 : index == hoverIndex ? 1 : 0.2,
           }"
+          v-lazyLoad
         />
       </div>
     </div>

@@ -12,10 +12,12 @@ import "@/assets/iconfont/iconfont.js";
 
 import Icon from "@/components/Icon.vue";
 
-// import ElementPlus from "element-plus";
+// import ElementPlus from "element-plusasd";
 import "element-plus/dist/index.css";
 
-import { observe } from "./direactives";
+import { observe } from "./directives/observe";
+import imgLazy from "./directives/imgLazy";
+
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 const app = createApp(App);
@@ -28,6 +30,7 @@ app.use(router);
 app.use(pinia);
 // app.use(ElementPlus);
 app.directive("observe", observe);
+app.directive("lazyLoad", imgLazy);
 
 app.component("Icon", Icon);
 

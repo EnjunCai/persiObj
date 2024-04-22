@@ -30,10 +30,15 @@
       </el-radio-group>
     </div>
   </div>
+
+  <div style="margin-top: 100px">
+    <turntable />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+import turntable from "./components/turntable.vue";
 interface list {
   id: Number;
   title: String;

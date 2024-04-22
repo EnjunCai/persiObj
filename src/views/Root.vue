@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import { ref, reactive, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import NavBar from "@/components/NavBar.vue";
 </script>
 <style scoped lang="scss">
 .content_wrapper {

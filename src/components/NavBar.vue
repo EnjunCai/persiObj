@@ -76,8 +76,8 @@ const screenWidth = ref(
     document.documentElement.clientWidth ||
     document.body.clientWidth
 );
-
-const barList = reactive([
+const routerParams = ref(route.params.id);
+const barList: barList[] = [
   { id: 1, title: "首页", router: "/home" },
   {
     id: 2,
@@ -116,18 +116,50 @@ const barList = reactive([
         title: "11",
         router: "/waterFullPage",
       },
+      {
+        title: "11",
+        router: "/CardExpansion",
+      },
+      {
+        title: "11",
+        router: "/bilibiliMouseMove",
+      },
+      {
+        title: "11",
+        router: "/video",
+      },
+      {
+        title: "11",
+        router: "/markDown",
+      },
+      {
+        title: "11",
+        router: "/three",
+      },
     ],
   },
   // { id: 3, title: "学习", router: "/study" },
   { id: 4, title: "导航中心", router: "/navigation" },
+  {
+    id: 5,
+    title: "笔记",
+    router: "/note",
+    children: [
+      {
+        title: "11",
+        router: "/noteInfo/",
+      },
+    ],
+  },
   // { id: 5, title: "休闲", router: "/game" },
   { id: 6, title: "其他", router: "/other" },
-]);
+];
 
 watch(
   () => route.fullPath,
   (to, from) => {
-    console.log("当前路由：", to);
+    routerParams.value = route.params.id;
+
     setBgFn();
   }
 );
@@ -147,6 +179,7 @@ const setBgPosition = (index: number) => {
   if (index == -1 || !ulParent.value) {
     return;
   }
+
   let parent = ulParent.value.getBoundingClientRect();
   let item = listItem.value[index].getBoundingClientRect();
 
@@ -175,12 +208,20 @@ const findIndexByRouter = (list: barList[], router: string) => {
 };
 
 onMounted(() => {
+  const indexNote = barList.findIndex((item) => item.id === 5);
+
   setBgFn();
   window.addEventListener("resize", handleResize);
 });
 
 const setBgFn = () => {
   if (screenWidth.value > 780) {
+    const indexNote = barList.findIndex((item) => item.id === 5);
+    if (barList[indexNote].children) {
+      (barList[indexNote].children as barList[])[0].router =
+        "/noteInfo/" + route.params.id;
+    }
+
     const studyIndex = findIndexByRouter(barList, route.path);
     navIndex.value = studyIndex;
 

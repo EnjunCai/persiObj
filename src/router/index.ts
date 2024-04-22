@@ -63,11 +63,45 @@ const routes = [
         name: "waterFullPage",
         component: () => import("../views/study/waterFullPage/index.vue"),
       },
-
+      {
+        path: "/CardExpansion",
+        name: "CardExpansion",
+        component: () => import("../views/study/CardExpansionPage/index.vue"),
+      },
+      {
+        path: "/bilibiliMouseMove",
+        name: "bilibiliMouseMove",
+        component: () => import("../views/study/bilibiliMouseMove/index.vue"),
+      },
+      {
+        path: "/video",
+        name: "video",
+        component: () => import("../views/study/video/index.vue"),
+      },
+      {
+        path: "/markDown",
+        name: "markDown",
+        component: () => import("../views/study/markDown/index.vue"),
+      },
+      {
+        path: "/note",
+        name: "note",
+        component: () => import("../views/note/index.vue"),
+      },
+      {
+        path: "/noteInfo/:id",
+        name: "noteInfo",
+        component: () => import("../views/noteInfo/index.vue"),
+      },
       {
         path: "/fullPage",
         name: "fullPage",
         component: () => import("../views/study/fullPage/index.vue"),
+      },
+      {
+        path: "/three",
+        name: "three",
+        component: () => import("../views/study/threeStudy/index.vue"),
       },
     ],
   },

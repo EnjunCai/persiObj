@@ -39,6 +39,18 @@ const list2 = ref({
               id: "1-2-3",
               title: "step 3",
             },
+            {
+              id: "1-2-4",
+              title: "step 4",
+            },
+            {
+              id: "1-2-5",
+              title: "step 5",
+            },
+            {
+              id: "1-2-6",
+              title: "step 6",
+            },
           ],
         },
       ],
