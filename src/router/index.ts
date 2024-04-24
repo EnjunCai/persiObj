@@ -103,6 +103,11 @@ const routes = [
         name: "three",
         component: () => import("../views/study/threeStudy/index.vue"),
       },
+      {
+        path: "/scanCode",
+        name: "scanCode",
+        component: () => import("../views/study/scanCode/index.vue"),
+      },
     ],
   },
   {

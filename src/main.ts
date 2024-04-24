@@ -16,6 +16,7 @@ import Icon from "@/components/Icon.vue";
 import "element-plus/dist/index.css";
 
 import { observe } from "./directives/observe";
+import { scrollReveal } from "./directives/scrollReveal";
 import imgLazy from "./directives/imgLazy";
 
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
@@ -30,6 +31,7 @@ app.use(router);
 app.use(pinia);
 // app.use(ElementPlus);
 app.directive("observe", observe);
+app.directive("scrollReveal", scrollReveal);
 app.directive("lazyLoad", imgLazy);
 
 app.component("Icon", Icon);

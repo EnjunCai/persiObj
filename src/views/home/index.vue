@@ -80,7 +80,7 @@
         :isScroll="true"
       >
         <template #item="{ item }">
-          <el-image :src="item.url" alt="图片" class="image" lazy></el-image>
+          <el-image :src="item.url" alt="图片" class="image" lazy ></el-image>
         </template>
       </WaterFull>
     </div>
@@ -182,7 +182,7 @@ const requestData = (page: number, pageSize: number): Promise<IImageItem[]> => {
 watch(
   () => screenWidth.value,
   (val) => {
-    console.log(val);
+    // console.log(val);
     if (val < 1024) {
       WaterFullColumn.value = 2;
     } else if (val < 768) {

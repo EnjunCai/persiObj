@@ -100,6 +100,12 @@ const list = reactive([
     router: "/three",
     text: "three基础案例",
   },
+  {
+    id: "list13",
+    title: "扫描二维码(手机)",
+    router: "/scanCode",
+    text: "扫描二维码",
+  },
 ]);
 const msg = ref("study");
 
