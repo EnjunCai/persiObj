@@ -14,12 +14,7 @@
 
     <!-- <div class="info_title">开发过的项目</div> -->
     <div class="card_wrapper1">
-      <a
-        href="https://kira-learning.com/"
-        target="_black"
-        class="w7"
-        v-observe="{ animationName: 'activeObserve' }"
-      >
+      <a href="https://kira-learning.com/" target="_black" class="w7" v-observe="{ animationName: 'activeObserve' }">
         <div class="w7_img">
           <img src="/src/assets/images/kira.jpg" v-lazyLoad />
         </div>
@@ -28,11 +23,7 @@
           在公司中进行独立开发的一个官网
         </div>
       </a>
-      <div
-        class="w3"
-        @click="router.push('/study')"
-        v-observe="{ animationName: 'activeObserve' }"
-      >
+      <div class="w3" @click="router.push('/study')" v-observe="{ animationName: 'activeObserve' }">
         <div class="w3_img">
           <img src="/src/assets/images/kaifa.svg" v-lazyLoad />
         </div>
@@ -43,11 +34,7 @@
       </div>
     </div>
     <div class="card_wrapper1">
-      <div
-        class="w3"
-        v-observe="{ animationName: 'activeObserve' }"
-        @click="router.push('/navigation')"
-      >
+      <div class="w3" v-observe="{ animationName: 'activeObserve' }" @click="router.push('/navigation')">
         <div class="w3_img">
           <img src="/src/assets/images/2.5Dxuqiu.svg" v-lazyLoad />
         </div>
@@ -56,12 +43,8 @@
           汇总一些我认为不错的一些网站
         </div>
       </div>
-      <a
-        href="https://kira-learning.org/"
-        target="_black"
-        class="w7 w7R"
-        v-observe="{ animationName: 'activeObserve', move: 'right' }"
-      >
+      <a href="https://kira-learning.org/" target="_black" class="w7 w7R"
+        v-observe="{ animationName: 'activeObserve', move: 'right' }">
         <div class="w7_text">
           <p>kira学习平台</p>
           负责大部分内容开发，包括登录、答题系统、答题创建、在线聊天、编辑器等等（目前没有账号，无法登陆）
@@ -72,15 +55,9 @@
       </a>
     </div>
     <div class="waterfall-container">
-      <WaterFull
-        :gap="20"
-        :column="WaterFullColumn"
-        :request="requestData"
-        :page-size="9"
-        :isScroll="true"
-      >
+      <WaterFull :gap="20" :column="WaterFullColumn" :request="requestData" :page-size="9" :isScroll="true">
         <template #item="{ item }">
-          <el-image :src="item.url" alt="图片" class="image" lazy ></el-image>
+          <el-image :src="item.url" alt="图片" class="image" lazy></el-image>
         </template>
       </WaterFull>
     </div>
@@ -147,8 +124,8 @@ const WaterFullColumn = ref(3);
 
 const screenWidth = ref(
   window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth
+  document.documentElement.clientWidth ||
+  document.body.clientWidth
 );
 
 const infoUrl = ref();
@@ -160,8 +137,7 @@ infoUrl.value = new URL(
 const requestData = (page: number, pageSize: number): Promise<IImageItem[]> => {
   return new Promise<IImageItem[]>((resolve) => {
     fetch(
-      `https://www.vilipix.com/api/v1/picture/public?limit=${pageSize}&tags=%E9%A3%8E%E6%99%AF&from=pc_web&sort=new&offset=${
-        --page * pageSize
+      `https://www.vilipix.com/api/v1/picture/public?limit=${pageSize}&tags=%E9%A3%8E%E6%99%AF&from=pc_web&sort=new&offset=${--page * pageSize
       }`
       // `https://www.vilipix.com/api/v1/picture/public?limit=${pageSize}&sort=hot&offset=${
       //   --page * pageSize
@@ -213,6 +189,7 @@ onUnmounted(() => {
 .home_wrapper {
   background: var(--bg-color);
 }
+
 .card_wrapper1 {
   overflow: hidden;
   display: flex;
@@ -222,6 +199,7 @@ onUnmounted(() => {
 
   gap: 20px;
   align-items: stretch;
+
   .w7,
   .w3 {
     background: #f8f8f8;
@@ -240,15 +218,19 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     gap: 20px;
+
     .w7_text {
       flex: 1;
       line-height: 1.8;
+
       p {
         font-size: 28px;
       }
     }
+
     .w7_img {
       width: 200px;
+
       img {
         width: 100%;
       }
@@ -262,17 +244,21 @@ onUnmounted(() => {
     // align-content: center;
     align-items: center;
     justify-content: center;
+
     .w3_img {
       width: 150px;
       transform: translateY(0);
+
       img {
         width: 100%;
         transition: transform 0.2s ease-in-out;
       }
     }
+
     .w3_text {
       padding: 0 30px;
       line-height: 1.5;
+
       p {
         font-size: 28px;
       }
@@ -290,21 +276,24 @@ onUnmounted(() => {
     0% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(-10px);
     }
+
     100% {
       transform: translateY(0);
     }
   }
 }
+
 .info_wrapper {
   height: 750px;
   display: flex;
   align-items: center;
   color: var(--text-color);
 
-  & > div {
+  &>div {
     height: 100%;
 
     display: flex;
@@ -320,12 +309,15 @@ onUnmounted(() => {
     width: 50%;
     font-size: 32px;
     line-height: 1.6;
+
     p {
       font-size: 52px;
     }
   }
+
   .info_img {
     flex: 1;
+
     img {
       width: 600px;
     }
@@ -345,11 +337,16 @@ onUnmounted(() => {
 
   ul {
     column-count: 3;
+
     li {
-      break-inside: avoid-column; /* 防止li元素被分割到不同列 */
-      margin-bottom: 10px; /* 设置li元素之间的下边距 */
-      background-color: #f0f0f0; /* 设置背景颜色 */
-      padding: 10px; /* 设置内边距 */
+      break-inside: avoid-column;
+      /* 防止li元素被分割到不同列 */
+      margin-bottom: 10px;
+      /* 设置li元素之间的下边距 */
+      background-color: #f0f0f0;
+      /* 设置背景颜色 */
+      padding: 10px;
+      /* 设置内边距 */
 
       img {
         width: 100%;
@@ -362,6 +359,7 @@ onUnmounted(() => {
   margin: 100px;
   // width: 100vw;
   height: 500px;
+
   .image {
     width: 100%;
     height: 100%;
@@ -377,12 +375,15 @@ onUnmounted(() => {
 @media (max-width: 1080px) {
   .info_wrapper {
     height: 650px;
+
     .info_text {
       font-size: 22px;
+
       p {
         font-size: 42px;
       }
     }
+
     .info_img {
       img {
         width: 400px;
@@ -401,8 +402,10 @@ onUnmounted(() => {
       p {
         font-size: 32px;
       }
+
       font-size: 18px;
     }
+
     .info_img {
       img {
         width: 300px;
@@ -432,6 +435,7 @@ onUnmounted(() => {
     padding: 20px 40px 30px 40px;
 
     flex-direction: column;
+
     .w3,
     .w7 {
       flex: 1;
@@ -446,6 +450,7 @@ onUnmounted(() => {
       flex-direction: column-reverse;
     }
   }
+
   .waterfall-container {
     margin: 40px;
   }
@@ -454,6 +459,7 @@ onUnmounted(() => {
 @media (max-width: 450px) {
   .info_wrapper {
     flex-direction: column;
+
     .info_text {
       padding-left: 20px;
       width: 100%;
@@ -465,12 +471,14 @@ onUnmounted(() => {
     padding: 10px 20px 20px 20px;
 
     flex-direction: column;
+
     .w3,
     .w7 {
       flex: 1;
       width: 100%;
     }
   }
+
   .waterfall-container {
     margin: 20px;
     // ul {

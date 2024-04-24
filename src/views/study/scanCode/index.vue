@@ -24,7 +24,8 @@ const MyComponent = {
 const isScanning = ref(false);
 const ResData = ref()
 
-const onDetect = (detectedCodes) => {
+// ts声明下面的函数
+const onDetect = (detectedCodes:any) => {
   console.log(detectedCodes);
   ResData.value=ResData
 };
