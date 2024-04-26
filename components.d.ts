@@ -18,6 +18,7 @@ declare module 'vue' {
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     Icon: typeof import('./src/components/Icon.vue')['default']
+    IconTagI: typeof import('./src/components/IconTagI.vue')['default']
     MyAudio: typeof import('./src/components/MyAudio.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

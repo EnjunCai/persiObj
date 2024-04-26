@@ -1,19 +1,25 @@
 <template>
-  <div class="audioWrapper" :style="{
+  <div v-if="useMusicStoreData.currentMusic?.play" class="audioWrapper" :style="{
     transform: !isShow ? 'translateY(57px)' : 'translateY(0)',
     opacity: isShow ? 1 : 0.6,
   }" @mouseenter="moveEnter" @mouseleave="mouseLeave" @mousemove="handleMouseMove($event)"
     @mouseup="handleMouseUp($event)">
     <div class="active"></div>
     <div class="musicInfo">
-      <p>name</p>
-      <p>zuozhe</p>
+      <p>{{ useMusicStoreData.currentMusic?.name }}</p>
+      <!-- <p>zuozhe</p> -->
     </div>
     <!-- 音乐操作栏 -->
     <div class="musicOperation">
       <div>上一首</div>
-      <div>播放</div>
+      <div @click="togglePlayback" class="playBtn">
+        <Icon v-show="!isPlaying" class="#icon-play" fontSize="28px" />
+        <Icon v-show="isPlaying" class="#icon-pause" fontSize="28px" />
+      </div>
       <div>下一首</div>
+    </div>
+    <div>
+      {{ currentTimeFormatted }} / {{ totalTimeFormatted }}
     </div>
     <!-- 音乐进度条 -->
     <div class="musicProgress" ref="containerRect" @mousedown="handleProgressBarDown($event)"
@@ -30,8 +36,11 @@
 
       <div class="musicVolumeIcon" @mouseenter="handleVolumeEnter" @mouseleave="handleVolumeLeave"
         @mousemove="handleVolumeMove">
-        =
-        <div class="musicVolumeBar"></div>
+        <IconTagI classId="icon-sound-on" color="#fff" />
+
+        <div class="musicVolumeBar">
+
+        </div>
 
       </div>
     </div>
@@ -41,9 +50,10 @@
       ===
     </div>
     <div class="closeMusic" @click="closeMusic">X</div>
-    <div v-if="useMusicStoreData.currentMusic?.play" style="margin-top: 7px">
+    <div style="margin-top: 7px" class="audioPlayWrapper">
       <audio controls ref="audio" :src="CurrentMusicSrc" @pause="onPause" @play="onPlay" @loadstart="onLoadstart"
-        @volumechange="volumeChange" @timeupdate="timeUpdate" @canplay="onLoadedmetadata"></audio>
+        @volumechange="volumeChange" @loadedmetadata="MetadataLoaded" @timeupdate="timeUpdate"
+        @canplay="onLoadedmetadata"></audio>
     </div>
   </div>
 </template>
@@ -55,15 +65,29 @@ import { ref, Ref, reactive, watch, watchEffect } from "vue";
 
 import useMusicStore from "@/store/musicStore";
 
-const audio = ref();
 
+// 音乐ref
+const audio = ref();
+// 是否播放状态
+const isPlaying = ref(false);
+
+// 判断当前音乐是不是半隐藏
 const isShow = ref(false);
 const timer = ref();
+
+// 控制播放进度时候可以拖拽，按住才可以拖拽
 const isDragging = ref(false)
+
+// 进度提外容器ref
 const containerRect = ref()
 
+// 仓库数据
 const useMusicStoreData = useMusicStore();
-console.log(useMusicStoreData.currentMusic);
+// 播放时间
+let currentTimeFormatted = ref('00:00');
+let totalTimeFormatted = ref('00:00');
+
+
 let CurrentMusicSrc = ref("");
 // // 当前时间
 // let MusiccurrentTime: Ref<number> = ref();
@@ -79,10 +103,29 @@ let progress: Ref<number> = ref(0);
 let volumes: Ref<number> = ref(70);
 
 
+const togglePlayback = () => {
 
-console.log(audio.value);
+  if (audio.value.paused) {
+    audio.value.play()
+    isPlaying.value = true;
+
+  } else {
+    audio.value.pause()
+    isPlaying.value = false;
+  }
+  // if (isPlaying.value) {
+
+  // audio.value.pause();
+  // isPlaying.value = false;
+  // } else {
+  //   audio.value.play()
+
+  // }
+}
+
 const onPause = () => { };
-const onPlay = (e) => {
+
+const onPlay = (e: Event) => {
   console.log(e);
 
 };
@@ -101,6 +144,8 @@ const timeUpdate = (e: Event) => {
   const audioElement = e.target as HTMLAudioElement;
 
   if (!audioElement) return;
+  // 获取播放的总时间和当前播放时间
+  currentTimeFormatted.value = formatTime(audio.value.currentTime);
 
   // 计算当前播放进度百分比
   progress.value = Math.min((audioElement.currentTime / audioElement.duration) * 100, 100);
@@ -125,6 +170,11 @@ const handleProgressBarDown = (e: MouseEvent) => {
 
 };
 
+// 获取总时间
+const MetadataLoaded = () => {
+  totalTimeFormatted.value = formatTime(audio.value.duration);
+}
+
 // 移动鼠标改变进度条位置，需要松开再次播放
 const handleMouseMove = (e: MouseEvent) => {
   if (!isDragging.value) return
@@ -140,6 +190,16 @@ const handleMouseMove = (e: MouseEvent) => {
 
 };
 
+// 转换时间
+function formatTime(seconds: number): string {
+  const minutes = Math.floor(seconds / 60);
+  const secondsRemainder = Math.floor(seconds % 60);
+
+  return `${padZero(minutes)}:${padZero(secondsRemainder)}`;
+}
+function padZero(value: number): string {
+  return value.toString().padStart(2, '0');
+}
 
 // 松开鼠标根据当前进度位置重新开始播放
 const handleMouseUp = (e: MouseEvent) => {
@@ -187,11 +247,18 @@ const handleVolumeMove = (e: MouseEvent) => {
 };
 
 
+
 watchEffect(() => {
   if (audio.value) {
+    console.log(useMusicStoreData.musicList);
+
     isShow.value = true;
     audio.value.src = useMusicStoreData.currentMusic?.play;
     audio.value.play();
+
+
+    isPlaying.value = true;
+
     timer.value = setTimeout(() => {
       isShow.value = false;
     }, 3000);
@@ -253,12 +320,35 @@ watchEffect(() => {
 
       .musicVolumeBar {
         height: 0px;
-        width: 10px;
+        width: 16px;
         background: pink;
         overflow: hidden;
         transition: all .3s;
         position: absolute;
-        bottom: 0px
+        bottom: 0px;
+
+
+        //核心修改代码
+        input[type=range] {
+
+          -webkit-appearance: slider-vertical;
+
+        }
+
+        //修改相应样式
+        input[type=range]::-webkit-slider-runnable-track {
+
+          -webkit-appearance: none;
+          /*清除系统默认样式*/
+
+          width: 16px;
+          /*拖动块宽度*/
+
+          background: #cccccc;
+          /*拖动块背景*/
+
+        }
+
       }
 
       &:hover {
@@ -272,6 +362,23 @@ watchEffect(() => {
 
 
   .musicInfo {}
+
+  .musicOperation {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .playBtn {
+      cursor: pointer;
+      background: var(--bg-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+    }
+  }
 }
 
 .closeMusic {
@@ -280,6 +387,12 @@ watchEffect(() => {
   right: 10px;
   top: 10px;
   color: #fff;
+}
+
+.audioPlayWrapper {
+  display: none;
+  position: absolute;
+  left: -100vw;
 }
 
 audio {

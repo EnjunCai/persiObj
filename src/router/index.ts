@@ -31,7 +31,7 @@ const routes = [
       {
         path: "/tree",
         name: "tree",
-        component: () => import("../views/study/tree/index.vue"),
+        component: () => import("../views/study/Tree/index.vue"),
       },
       {
         path: "/navigation",

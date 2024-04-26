@@ -11,6 +11,7 @@ import "@/assets/iconfont/iconfont.css";
 import "@/assets/iconfont/iconfont.js";
 
 import Icon from "@/components/Icon.vue";
+import IconTagI from "@/components/IconTagI.vue";
 
 // import ElementPlus from "element-plusasd";
 import "element-plus/dist/index.css";
@@ -35,6 +36,7 @@ app.directive("scrollReveal", scrollReveal);
 app.directive("lazyLoad", imgLazy);
 
 app.component("Icon", Icon);
+app.component("IconTagI", IconTagI);
 
 document.addEventListener;
 app.mount("#app");

@@ -1,16 +1,11 @@
 <template>
-  <svg
-    class="icon"
-    aria-hidden="true"
-    :style="{ width: fontSize, height: fontSize }"
-    :width="fontSize"
-    :height="fontSize"
-  >
+  <svg class="icon" aria-hidden="true" :style="{ width: fontSize, height: fontSize }" :width="fontSize"
+    :height="fontSize">
     <use :xlink:href="class" :fill="color"></use>
   </svg>
 </template>
-  
-  <script setup lang="ts">
+
+<script setup lang="ts">
 import { ref, defineProps } from "vue";
 const props = defineProps({
   class: String, //需要添加的字体图标类
@@ -26,14 +21,12 @@ const props = defineProps({
   },
 });
 </script>
-  <style scoped>
+<style scoped>
 .icon {
   width: 1em;
   height: 1em;
   vertical-align: -0.15em;
-  fill: currentColor;
+  /* fill: currentColor; */
   overflow: hidden;
 }
 </style>
-  
-  
