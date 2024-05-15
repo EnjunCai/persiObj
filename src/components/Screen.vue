@@ -3,7 +3,7 @@
     <slot></slot>
   </div>
 </template>
- 
+
 <script setup lang="ts">
 import debounce from "lodash/debounce";
 import { computed, reactive, onMounted, onUnmounted, defineProps } from "vue";
@@ -18,7 +18,7 @@ const { height, width } = defineProps({
     default: 1920,
   },
 });
-console.log(height, width);
+
 
 interface Scale {
   scaleX: number | null;
@@ -63,7 +63,7 @@ onUnmounted(() => {
   window.addEventListener("resize", setScale);
 });
 </script>
- 
+
 <style lang="scss" scoped>
 .scale-box {
   transform-origin: 0 0;
@@ -73,4 +73,3 @@ onUnmounted(() => {
   transition: 0.3s;
 }
 </style>
- 

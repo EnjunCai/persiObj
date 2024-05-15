@@ -13,15 +13,9 @@
       <div v-else class="nav_list">
         <ul ref="ulParent">
           <div ref="activeBgRef" class="active_bg"></div>
-          <li
-            v-for="(item, index) in barList"
-            :key="item.id"
-            :class="{
-              active: navIndex == index,
-            }"
-            @click.stop="navClick(item.router, index, $el)"
-            ref="listItem"
-          >
+          <li v-for="(item, index) in barList" :key="item.id" :class="{
+            active: navIndex == index,
+          }" @click.stop="navClick(item.router, index, $el)" ref="listItem">
             {{ item.title }}
           </li>
         </ul>
@@ -29,17 +23,10 @@
       </div>
     </nav>
   </div>
-  <div
-    v-if="screenWidth <= 780"
-    :class="{ navMobileList: true, openMobileList: isOpenMobileBar }"
-  >
-    <!-- 123 -->
+  <div v-if="screenWidth <= 780" :class="{ navMobileList: true, openMobileList: isOpenMobileBar }">
+
     <ul class="mobileListUl">
-      <li
-        :key="item.id"
-        v-for="(item, index) in barList"
-        @click.stop="navClick(item.router, index, $el)"
-      >
+      <li :key="item.id" v-for="(item, index) in barList" @click.stop="navClick(item.router, index, $el)">
         {{ item.title }}
       </li>
 
@@ -53,6 +40,9 @@ import { ref, reactive, watch, onMounted, nextTick, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import CheckTheme from "./CheckTheme.vue";
 
+import useGlobalStore from "@/store/globalStore";
+
+
 interface barList {
   id?: number;
   title: string;
@@ -62,6 +52,9 @@ interface barList {
 
 const router = useRouter();
 const route = useRoute();
+
+
+
 
 const navIndex = ref(0);
 // 控制导航背景
@@ -73,8 +66,8 @@ const isOpenMobileBar = ref(false);
 
 const screenWidth = ref(
   window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth
+  document.documentElement.clientWidth ||
+  document.body.clientWidth
 );
 const routerParams = ref(route.params.id);
 const barList: barList[] = [
@@ -244,12 +237,13 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .global_wrapper {
-  z-index: 99;
+  z-index: 99999;
   background: var(--bg-color);
   position: fixed;
   width: 100vw;
   // display: flex;
 }
+
 .global_nav {
   display: flex;
   // flex-direction: column;
@@ -261,7 +255,9 @@ onUnmounted(() => {
   color: var(--text-color);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1019607843);
   width: 100%;
-  z-index: 99;
+  position: relative;
+  z-index: 99999;
+
   .logo {
     padding: 10px;
     font-weight: 700;
@@ -271,21 +267,20 @@ onUnmounted(() => {
     /* Double percentages to avoid blur (#000 10%, #fff 10%, #fff 20%, ...). */
 
     cursor: pointer;
+
     &:hover {
       background: #ca4246;
       background-color: #ca4246;
-      background: conic-gradient(
-        #ca4246 16.666%,
-        #e16541 16.666%,
-        #e16541 33.333%,
-        #f18f43 33.333%,
-        #f18f43 50%,
-        #8b9862 50%,
-        #8b9862 66.666%,
-        #476098 66.666%,
-        #476098 83.333%,
-        #a7489b 83.333%
-      );
+      background: conic-gradient(#ca4246 16.666%,
+          #e16541 16.666%,
+          #e16541 33.333%,
+          #f18f43 33.333%,
+          #f18f43 50%,
+          #8b9862 50%,
+          #8b9862 66.666%,
+          #476098 66.666%,
+          #476098 83.333%,
+          #a7489b 83.333%);
 
       /* Set thee background size and repeat properties. */
       background-size: 57%;
@@ -305,6 +300,7 @@ onUnmounted(() => {
   .nav_list {
     display: flex;
     align-items: center;
+
     ul {
       display: flex;
       position: relative;
@@ -346,6 +342,7 @@ onUnmounted(() => {
       margin: auto;
       display: block;
       height: calc(4px * 3 + 11px * 2);
+
       .bar {
         position: absolute;
         left: 0;
@@ -371,6 +368,7 @@ onUnmounted(() => {
         transition-property: opacity;
         transition-delay: calc(0s + 0.35s);
       }
+
       .bar--bottom {
         top: calc(50% + 6px + 4px / 2);
         transition-property: top, transform;
@@ -399,11 +397,12 @@ onUnmounted(() => {
     }
   }
 }
+
 .navMobileList {
   padding: 130px 20px 0 20px;
   overflow: hidden;
   background: var(--bg-color);
-  z-index: 88;
+  z-index: 888;
   position: fixed;
   height: 0vh;
   // transform: translateY(-100%);
@@ -419,11 +418,13 @@ onUnmounted(() => {
     // justify-content: space-around;
     gap: 50px;
     height: 100%;
+
     li {
       cursor: pointer;
     }
   }
 }
+
 .openMobileList {
   height: 100vh;
   // transform: translateY(0);
@@ -434,14 +435,17 @@ onUnmounted(() => {
     background-size: 300%;
     background-position: -9em 1em;
   }
+
   20% {
     background-size: 57%;
     background-position: 0 1em;
   }
+
   80% {
     background-size: 57%;
     background-position: 0 0;
   }
+
   100% {
     background-size: 300%;
     background-position: -9em 1em;
@@ -453,6 +457,7 @@ onUnmounted(() => {
     .logo {
       font-size: 18px;
     }
+
     // font-size: 12px;
     .nav_list {
       li {
@@ -461,20 +466,24 @@ onUnmounted(() => {
     }
   }
 }
+
 @media (max-width: 780px) {
   .navMobileList {
     padding: 124px 20px 0 20px;
   }
 }
+
 @media (max-width: 668px) {
   .navMobileList {
     padding: 118px 20px 0 20px;
   }
 }
+
 @media (max-width: 450px) {
   .global_nav {
     padding: 20px;
   }
+
   .navMobileList {
     padding: 78px 20px 0 20px;
   }

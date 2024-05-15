@@ -1,29 +1,36 @@
 <template>
   <div class="toggle-switch">
     <label class="switch-label">
-      <input
-        type="checkbox"
-        class="checkbox"
-        v-model="checkBox"
-        @change="handleChange"
-      />
+      <!-- 监听父组件传来的handleChange -->
+
+      <input type="checkbox" class="checkbox" v-model="useGlobalStoreData.themeCheckBox" @change="handleChange" />
       <span class="slider"></span>
     </label>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-const checkBox = ref(true);
+import { ref, watch, defineProps, defineEmits } from "vue";
 
-const handleChange = () => {
-  console.log(checkBox.value);
-  if (checkBox.value) {
+import useGlobalStore from "@/store/globalStore";
+const useGlobalStoreData = useGlobalStore();
+
+const emit = defineEmits(['handleChange1'])
+
+const handleChange = (e: any) => {
+
+
+  if (e.target.checked) {
     window.document.documentElement.removeAttribute("data-theme");
   } else {
     window.document.documentElement.setAttribute("data-theme", "light");
   }
+
+  useGlobalStoreData.setThemeCheckBox(e.target.checked)
+  // checkBox.value = e.target.checked
 };
+
+
 </script>
 
 <style scoped>
@@ -61,7 +68,7 @@ const handleChange = () => {
   transition: 0.3s;
 }
 
-.checkbox:checked ~ .slider {
+.checkbox:checked~.slider {
   background-color: var(--light);
 }
 
@@ -80,7 +87,7 @@ const handleChange = () => {
   transition: 0.3s;
 }
 
-.checkbox:checked ~ .slider::before {
+.checkbox:checked~.slider::before {
   -webkit-transform: translateX(50px);
   -ms-transform: translateX(50px);
   transform: translateX(33px);

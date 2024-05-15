@@ -1,28 +1,19 @@
 <template>
   <div class="fs-waterfall-container" v-loading="state.loading">
-    <div
-      class="fs-waterfall-content"
-      :style="{ overflowY: props.isScroll ? 'inherit' : 'scroll' }"
-      ref="contentRef"
-    >
+    <div class="fs-waterfall-content" :style="{ overflowY: props.isScroll ? 'inherit' : 'scroll' }" ref="contentRef">
       <div class="fs-waterfall-list">
-        <div
-          class="fs-waterfall-item"
-          v-for="(item, index) in state.imageList"
-          :key="item.id"
-          :style="{
-            width: `${state.imageWidth}px`,
-            transform: `translate3d(${imagePos[index].x}px, ${imagePos[index].y}px, 0)`,
-          }"
-        >
+        <div class="fs-waterfall-item" v-for="(item, index) in state.imageList" :key="item.id" :style="{
+          width: `${state.imageWidth}px`,
+          transform: `translate3d(${imagePos[index].x}px, ${imagePos[index].y}px, 0)`,
+        }">
           <slot name="item" :item="item"></slot>
         </div>
       </div>
     </div>
   </div>
 </template>
-  
-  <script setup lang="ts">
+
+<script setup lang="ts">
 import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
 import type { IImageItem, IWaterFallProps } from "./type";
 import { debounce, rafThrottle } from "./tool";
@@ -79,6 +70,8 @@ const getImageList = async (
   if (state.isfinish) return;
   state.loading = true;
   const list = await props.request(page, pageSize);
+  console.log(list);
+
   state.page++;
   if (!list.length) {
     state.isfinish = true;
@@ -158,8 +151,8 @@ onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
 });
 </script>
-  
-  <style scoped lang="scss">
+
+<style scoped lang="scss">
 .fs-waterfall {
   &-container {
     width: 100%;
@@ -176,6 +169,7 @@ onUnmounted(() => {
     width: 100%;
     position: relative;
   }
+
   &-item {
     position: absolute;
     top: 0;

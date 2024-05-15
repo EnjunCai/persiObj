@@ -104,21 +104,8 @@ import { useRouter, useRoute } from "vue-router";
 import WaterFull from "@/components/WaterFull/index.vue";
 import type { IImageItem } from "@/components/WaterFull/type";
 
-import CustomImg from "@/components/CustomImg.vue";
 
 const router = useRouter();
-
-const url1 = new URL("@/assets/images/image1.svg", import.meta.url).pathname;
-const url2 = new URL("@/assets/images/kira.jpg", import.meta.url).pathname;
-const url3 = new URL("@/assets/images/kirapintai.jpg", import.meta.url)
-  .pathname;
-const url4 = new URL("@/assets/images/kaifa.svg", import.meta.url).pathname;
-const url5 = new URL("@/assets/images/2.5Dxuqiu.svg", import.meta.url).pathname;
-const urlI1 = new URL("@/assets/images/i1.svg", import.meta.url).pathname;
-const urlI2 = new URL("@/assets/images/i2.svg", import.meta.url).pathname;
-const urlI3 = new URL("@/assets/images/i3.svg", import.meta.url).pathname;
-const urlI4 = new URL("@/assets/images/i4.svg", import.meta.url).pathname;
-const urlI5 = new URL("@/assets/images/i5.svg", import.meta.url).pathname;
 
 const WaterFullColumn = ref(3);
 
@@ -135,15 +122,31 @@ infoUrl.value = new URL(
 ).pathname;
 
 const requestData = (page: number, pageSize: number): Promise<IImageItem[]> => {
+
+  let url = `https://www.vilipix.com/api/v1/picture/public?limit=${9}&tags=%E9%A3%8E%E6%99%AF&from=pc_web&sort=new&offset=${9 * 9
+    }`
+  // js获取当前是在什么设备，截取出来判断是pc还是手机
+  const ua = navigator.userAgent;
+  if (ua.indexOf("Windows") > -1) {
+    // win系统
+
+  } else {
+    url = `https://m.vilipix.com/api/v1/picture/public?limit=${9}&tags=%E9%A3%8E%E6%99%AF&sort=new&offset=${9 * 9}`
+  }
+
+
+
+  console.log(screenWidth.value);
+
+
   return new Promise<IImageItem[]>((resolve) => {
     fetch(
-      `https://www.vilipix.com/api/v1/picture/public?limit=${pageSize}&tags=%E9%A3%8E%E6%99%AF&from=pc_web&sort=new&offset=${--page * pageSize
-      }`
-      // `https://www.vilipix.com/api/v1/picture/public?limit=${pageSize}&sort=hot&offset=${
-      //   --page * pageSize
-      // }`
+      url
+
     ).then(async (res) => {
       const result = await res.json();
+
+
       const imageList: IImageItem[] = result.data.rows.map((i: any) => ({
         id: i.picture_id,
         url: i.original_url,
@@ -178,6 +181,8 @@ function handleResize() {
 
 onMounted(() => {
   window.addEventListener("resize", handleResize);
+
+
 });
 
 onUnmounted(() => {

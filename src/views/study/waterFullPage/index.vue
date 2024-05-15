@@ -1,12 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="waterfall-container">
-      <WaterFull
-        :gap="20"
-        :column="WaterFullColumn"
-        :request="requestData"
-        :page-size="30"
-      >
+      <WaterFull :gap="20" :column="WaterFullColumn" :request="requestData" :page-size="30">
         <template #item="{ item }">
           <el-image :src="item.url" alt="图片" class="image" lazy></el-image>
         </template>
@@ -24,8 +19,8 @@ const WaterFullColumn = ref(5);
 
 const screenWidth = ref(
   window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth
+  document.documentElement.clientWidth ||
+  document.body.clientWidth
 );
 watch(
   () => screenWidth.value,
@@ -41,14 +36,21 @@ watch(
 );
 
 const requestData = (page: number, pageSize: number): Promise<IImageItem[]> => {
+
+  let url = `https://www.vilipix.com/api/v1/picture/public?limit=${pageSize}&tags=%E9%A3%8E%E6%99%AF&from=pc_web&sort=new&offset=${--page * pageSize
+    }`
+  // js获取当前是在什么设备，截取出来判断是pc还是手机
+  const ua = navigator.userAgent;
+  if (ua.indexOf("Windows") > -1) {
+    // win系统
+
+  } else {
+    url = `https://m.vilipix.com/api/v1/picture/public?limit=${pageSize}&tags=%E9%A3%8E%E6%99%AF&sort=new&offset=${--page * pageSize}`
+  }
   return new Promise<IImageItem[]>((resolve) => {
     fetch(
-      `/api/v1/picture/public?limit=${pageSize}&tags=%E7%B2%BE%E7%81%B5%E5%AE%9D%E5%8F%AF%E6%A2%A6&from=pc_web&sort=new&offset=${
-        --page * pageSize
-      }`
-      // `https://www.vilipix.com/api/v1/picture/public?limit=${pageSize}&sort=hot&offset=${
-      //   --page * pageSize
-      // }`
+
+      url
     ).then(async (res) => {
       const result = await res.json();
       const imageList: IImageItem[] = result.data.rows.map((i: any) => ({
@@ -84,10 +86,12 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
 }
+
 .waterfall-container {
   margin: 100px;
   width: 80vw;
   height: 60vh;
+
   .image {
     width: 100%;
     height: 100%;
