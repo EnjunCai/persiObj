@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import StudyNavbarVue from "@/components/StudyNavbar.vue";
-import mTree from "@/views/study/tree/components/mTree.vue";
+import mTree from "./mTree.vue";
 
 const list2 = ref({
   classId: "xcv",
