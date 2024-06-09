@@ -13,7 +13,7 @@ import "@/assets/iconfont/iconfont.js";
 import Icon from "@/components/Icon.vue";
 import IconTagI from "@/components/IconTagI.vue";
 
-import { setupRouterGuard } from "./router/guard/index";
+import { setupRouterGuard } from "@/router/guard/index";
 
 // import ElementPlus from "element-plusasd";
 import "element-plus/dist/index.css";
