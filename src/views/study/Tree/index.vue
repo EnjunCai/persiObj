@@ -2,7 +2,7 @@
 <template>
   <StudyNavbarVue>
     <template v-slot:main>
-      <!-- <mTree :options="list2.moduleList" /> -->
+      <mTree :options="list2.moduleList" />
     </template>
   </StudyNavbarVue>
 </template>
@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import StudyNavbarVue from "@/components/StudyNavbar.vue";
-// import mTree from "./mTree.vue";
+import mTree from "@/views/study/Tree/components/mTree.vue";
 
 const list2 = ref({
   classId: "xcv",

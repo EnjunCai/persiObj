@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { MusicInfo } from "./musicInfo";
 import StudyNavbarVue from "@/components/StudyNavbar.vue";
-import { sjMusic, wytop } from "@/axios/api/test";
+import { sjMusic, wytop, textC } from "@/axios/api/test";
 
 import { ref, onMounted, reactive, inject } from "vue";
 
@@ -39,6 +39,11 @@ let musicTopList = ref<MusicInfo[]>([]);
 sjMusic().then((res) => {
   console.log(res);
 });
+
+textC().then((res) => {
+  console.log(res, "---");
+});
+
 wytop().then((res) => {
   console.log(res);
   musicTopList.value = res.data;

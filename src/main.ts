@@ -13,6 +13,8 @@ import "@/assets/iconfont/iconfont.js";
 import Icon from "@/components/Icon.vue";
 import IconTagI from "@/components/IconTagI.vue";
 
+import { setupRouterGuard } from "./router/guard/index";
+
 // import ElementPlus from "element-plusasd";
 import "element-plus/dist/index.css";
 
@@ -27,6 +29,9 @@ const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
+
+// 切换路由顶部进度条
+setupRouterGuard(router);
 
 app.use(router);
 app.use(pinia);

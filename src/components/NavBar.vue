@@ -2,6 +2,7 @@
   <div class="global_wrapper">
     <nav class="global_nav">
       <div class="logo" @click="router.push('/home')">Enjun blog</div>
+      <!-- 小于780窗口显示 -->
       <div v-if="screenWidth <= 780" class="mobileBtn" @click="checkMobileOpen">
         <!-- <input type="checkbox" id="checkbox" /> -->
         <div :class="{ toggle: true, toggleActive: isOpenMobileBar }">
@@ -10,12 +11,19 @@
           <div class="bar bar--bottom"></div>
         </div>
       </div>
+      <!-- 大于780显示 -->
       <div v-else class="nav_list">
         <ul ref="ulParent">
           <div ref="activeBgRef" class="active_bg"></div>
-          <li v-for="(item, index) in barList" :key="item.id" :class="{
-            active: navIndex == index,
-          }" @click.stop="navClick(item.router, index, $el)" ref="listItem">
+          <li
+            v-for="(item, index) in barList"
+            :key="item.id"
+            :class="{
+              active: navIndex == index,
+            }"
+            @click.stop="navClick(item.router, index, $el)"
+            ref="listItem"
+          >
             {{ item.title }}
           </li>
         </ul>
@@ -23,10 +31,17 @@
       </div>
     </nav>
   </div>
-  <div v-if="screenWidth <= 780" :class="{ navMobileList: true, openMobileList: isOpenMobileBar }">
-
+  <!-- 小于780显示 -->
+  <div
+    v-if="screenWidth <= 780"
+    :class="{ navMobileList: true, openMobileList: isOpenMobileBar }"
+  >
     <ul class="mobileListUl">
-      <li :key="item.id" v-for="(item, index) in barList" @click.stop="navClick(item.router, index, $el)">
+      <li
+        :key="item.id"
+        v-for="(item, index) in barList"
+        @click.stop="navClick(item.router, index, $el)"
+      >
         {{ item.title }}
       </li>
 
@@ -42,19 +57,16 @@ import CheckTheme from "./CheckTheme.vue";
 
 import useGlobalStore from "@/store/globalStore";
 
-
 interface barList {
   id?: number;
   title: string;
   router: string;
+  childrenShowNav?: Boolean;
   children?: barList[];
 }
 
 const router = useRouter();
 const route = useRoute();
-
-
-
 
 const navIndex = ref(0);
 // 控制导航背景
@@ -66,8 +78,8 @@ const isOpenMobileBar = ref(false);
 
 const screenWidth = ref(
   window.innerWidth ||
-  document.documentElement.clientWidth ||
-  document.body.clientWidth
+    document.documentElement.clientWidth ||
+    document.body.clientWidth
 );
 const routerParams = ref(route.params.id);
 const barList: barList[] = [
@@ -133,17 +145,18 @@ const barList: barList[] = [
   },
   // { id: 3, title: "学习", router: "/study" },
   { id: 4, title: "导航中心", router: "/navigation" },
-  {
-    id: 5,
-    title: "笔记",
-    router: "/note",
-    children: [
-      {
-        title: "11",
-        router: "/noteInfo/",
-      },
-    ],
-  },
+  // {
+  //   id: 5,
+  //   title: "笔记",
+  //   router: "/note",
+  //   childrenShowNav: true,
+  //   children: [
+  //     {
+  //       title: "11",
+  //       router: "/noteInfo/",
+  //     },
+  //   ],
+  // },
   // { id: 5, title: "休闲", router: "/game" },
   { id: 6, title: "其他", router: "/other" },
 ];
@@ -163,7 +176,6 @@ const navClick = function (link: string, index: number, e: Event) {
   } else {
     isOpenMobileBar.value = false;
   }
-
   navIndex.value = index;
   router.push(link);
 };
@@ -201,23 +213,23 @@ const findIndexByRouter = (list: barList[], router: string) => {
 };
 
 onMounted(() => {
-  const indexNote = barList.findIndex((item) => item.id === 5);
-
   setBgFn();
   window.addEventListener("resize", handleResize);
 });
 
 const setBgFn = () => {
   if (screenWidth.value > 780) {
-    const indexNote = barList.findIndex((item) => item.id === 5);
-    if (barList[indexNote].children) {
-      (barList[indexNote].children as barList[])[0].router =
-        "/noteInfo/" + route.params.id;
+    // 单独处理子组件还需要显示导航的,
+
+    if (barList[navIndex.value].childrenShowNav) {
+      if (barList[navIndex.value].children) {
+        (barList[navIndex.value].children as barList[])[0].router =
+          "/noteInfo/" + route.params.id;
+      }
     }
 
     const studyIndex = findIndexByRouter(barList, route.path);
     navIndex.value = studyIndex;
-
     setBgPosition(studyIndex);
   }
 };
@@ -237,7 +249,7 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .global_wrapper {
-  z-index: 99999;
+  z-index: 999;
   background: var(--bg-color);
   position: fixed;
   width: 100vw;
@@ -256,7 +268,7 @@ onUnmounted(() => {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1019607843);
   width: 100%;
   position: relative;
-  z-index: 99999;
+  z-index: 999;
 
   .logo {
     padding: 10px;
@@ -271,16 +283,18 @@ onUnmounted(() => {
     &:hover {
       background: #ca4246;
       background-color: #ca4246;
-      background: conic-gradient(#ca4246 16.666%,
-          #e16541 16.666%,
-          #e16541 33.333%,
-          #f18f43 33.333%,
-          #f18f43 50%,
-          #8b9862 50%,
-          #8b9862 66.666%,
-          #476098 66.666%,
-          #476098 83.333%,
-          #a7489b 83.333%);
+      background: conic-gradient(
+        #ca4246 16.666%,
+        #e16541 16.666%,
+        #e16541 33.333%,
+        #f18f43 33.333%,
+        #f18f43 50%,
+        #8b9862 50%,
+        #8b9862 66.666%,
+        #476098 66.666%,
+        #476098 83.333%,
+        #a7489b 83.333%
+      );
 
       /* Set thee background size and repeat properties. */
       background-size: 57%;
