@@ -108,6 +108,15 @@ const routes = [
         name: "scanCode",
         component: () => import("../views/study/scanCode/index.vue"),
       },
+      {
+        path: "/map",
+        name: "map",
+        component: () => import("../views/study/map/index.vue"),
+      },  {
+        path: "/MyTable",
+        name: "MyTable",
+        component: () => import("../views/study/MyTable/index.vue"),
+      },
     ],
   },
   {

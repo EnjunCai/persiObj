@@ -5,4 +5,4 @@ export const sjMusic = (params?: any) =>
 export const wytop = (params?: any) =>
   get(" https://api.wer.plus/api/wytop", params);
 
-export const textC = () => get("/api/get");
+// export const textC = () => get("/api/get");

@@ -1,12 +1,9 @@
 <template>
-  <div class="main_wrapper">
+  <div v-loading.fullscreen.lock="loadingFull" class="main_wrapper">
     <router-view />
   </div>
 
-
-
   <div class="audio-wrapper">
-
     <!-- <div href="#yolo" class="button">
       <div>Click me</div>
     </div> -->
@@ -17,6 +14,13 @@
 <script setup lang="ts">
 import NavBar from "./components/NavBar.vue";
 import MyAudio from "@/components/MyAudio.vue";
+import { onMounted, ref } from "vue";
+
+const loadingFull = ref(true);
+
+onMounted(() => {
+  loadingFull.value = false;
+});
 </script>
 
 <style scoped lang="scss">

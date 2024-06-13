@@ -1,7 +1,7 @@
 <template>
   <StudyNavbarVue>
     <template v-slot:main>
-      <div class="content">
+      <div class="content" v-loading.fullscreen.lock="loadingFull">
         <div class="music-top100">
           <div
             v-for="(item, index) in musicTopList"
@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { MusicInfo } from "./musicInfo";
 import StudyNavbarVue from "@/components/StudyNavbar.vue";
-import { sjMusic, wytop, textC } from "@/axios/api/test";
+import { sjMusic, wytop } from "@/axios/api/test";
 
 import { ref, onMounted, reactive, inject } from "vue";
 
@@ -35,18 +35,17 @@ import useMusicStore from "@/store/musicStore";
 
 const useMusicStoreData = useMusicStore();
 
+const loadingFull = ref(true);
+
 let musicTopList = ref<MusicInfo[]>([]);
 sjMusic().then((res) => {
   console.log(res);
 });
 
-textC().then((res) => {
-  console.log(res, "---");
-});
-
 wytop().then((res) => {
   console.log(res);
   musicTopList.value = res.data;
+  loadingFull.value = false;
   console.log(musicTopList);
 });
 onMounted(() => {

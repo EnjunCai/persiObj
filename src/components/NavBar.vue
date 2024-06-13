@@ -141,6 +141,14 @@ const barList: barList[] = [
         title: "11",
         router: "/three",
       },
+      {
+        title: "11",
+        router: "/map",
+      },
+      {
+        title: "11",
+        router: "/MyTable",
+      },
     ],
   },
   // { id: 3, title: "学习", router: "/study" },

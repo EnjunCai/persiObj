@@ -89,6 +89,12 @@ const list = reactive([
     text: "自定义视频组件",
   },
   {
+    id: "list14",
+    title: "地图",
+    router: "/map",
+    text: "地图",
+  },
+  {
     id: "list11",
     title: "markDown编辑器",
     router: "/markDown",
@@ -100,11 +106,17 @@ const list = reactive([
     router: "/three",
     text: "three基础案例",
   },
+  // {
+  //   id: "list13",
+  //   title: "扫描二维码(手机)",
+  //   router: "/scanCode",
+  //   text: "扫描二维码",
+  // },
   {
-    id: "list13",
-    title: "扫描二维码(手机)",
-    router: "/scanCode",
-    text: "扫描二维码",
+    id: "list15",
+    title: "二次封装表格",
+    router: "/MyTable",
+    text: "二次封装表格",
   },
 ]);
 const msg = ref("study");
