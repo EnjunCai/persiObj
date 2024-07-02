@@ -56,14 +56,7 @@ import { useRouter, useRoute } from "vue-router";
 import CheckTheme from "./CheckTheme.vue";
 
 import useGlobalStore from "@/store/globalStore";
-
-interface barList {
-  id?: number;
-  title: string;
-  router: string;
-  childrenShowNav?: Boolean;
-  children?: barList[];
-}
+import { list, ListItem } from "@/views/navList";
 
 const router = useRouter();
 const route = useRoute();
@@ -82,74 +75,13 @@ const screenWidth = ref(
     document.body.clientWidth
 );
 const routerParams = ref(route.params.id);
-const barList: barList[] = [
+const barList: ListItem[] = [
   { id: 1, title: "首页", router: "/home" },
   {
     id: 2,
     title: "案例",
     router: "/study",
-    children: [
-      {
-        title: "11",
-        router: "/resize",
-      },
-      {
-        title: "11",
-        router: "/music",
-      },
-      {
-        title: "11",
-        router: "/tree",
-      },
-      {
-        title: "11",
-        router: "/rightClick",
-      },
-      {
-        title: "11",
-        router: "/fullPage",
-      },
-      {
-        title: "11",
-        router: "/lotteryDraw",
-      },
-      {
-        title: "11",
-        router: "/imagesChangeBg",
-      },
-      {
-        title: "11",
-        router: "/waterFullPage",
-      },
-      {
-        title: "11",
-        router: "/CardExpansion",
-      },
-      {
-        title: "11",
-        router: "/bilibiliMouseMove",
-      },
-      {
-        title: "11",
-        router: "/video",
-      },
-      {
-        title: "11",
-        router: "/markDown",
-      },
-      {
-        title: "11",
-        router: "/three",
-      },
-      {
-        title: "11",
-        router: "/map",
-      },
-      {
-        title: "11",
-        router: "/MyTable",
-      },
-    ],
+    children: list,
   },
   // { id: 3, title: "学习", router: "/study" },
   { id: 4, title: "导航中心", router: "/navigation" },
@@ -206,7 +138,7 @@ const checkMobileOpen = () => {
   isOpenMobileBar.value = !isOpenMobileBar.value;
 };
 
-const findIndexByRouter = (list: barList[], router: string) => {
+const findIndexByRouter = (list: ListItem[], router: string) => {
   for (let i = 0; i < list.length; i++) {
     if (list[i].router === router) {
       return i;
@@ -231,7 +163,7 @@ const setBgFn = () => {
 
     if (barList[navIndex.value].childrenShowNav) {
       if (barList[navIndex.value].children) {
-        (barList[navIndex.value].children as barList[])[0].router =
+        (barList[navIndex.value].children as ListItem[])[0].router =
           "/noteInfo/" + route.params.id;
       }
     }
