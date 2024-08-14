@@ -57,6 +57,7 @@ import CheckTheme from "./CheckTheme.vue";
 
 import useGlobalStore from "@/store/globalStore";
 import { list, ListItem } from "@/views/navList";
+import { noteList, noteItem } from "@/views/note/noteList";
 
 const router = useRouter();
 const route = useRoute();
@@ -85,18 +86,13 @@ const barList: ListItem[] = [
   },
   // { id: 3, title: "学习", router: "/study" },
   { id: 4, title: "导航中心", router: "/navigation" },
-  // {
-  //   id: 5,
-  //   title: "笔记",
-  //   router: "/note",
-  //   childrenShowNav: true,
-  //   children: [
-  //     {
-  //       title: "11",
-  //       router: "/noteInfo/",
-  //     },
-  //   ],
-  // },
+  {
+    id: 5,
+    title: "笔记",
+    router: "/note",
+    childrenShowNav: true,
+    children: noteList,
+  },
   // { id: 5, title: "休闲", router: "/game" },
   { id: 6, title: "其他", router: "/other" },
 ];
@@ -138,7 +134,7 @@ const checkMobileOpen = () => {
   isOpenMobileBar.value = !isOpenMobileBar.value;
 };
 
-const findIndexByRouter = (list: ListItem[], router: string) => {
+const findIndexByRouter = (list: ListItem[] | noteItem[], router: string) => {
   for (let i = 0; i < list.length; i++) {
     if (list[i].router === router) {
       return i;
@@ -203,12 +199,13 @@ onUnmounted(() => {
   justify-content: space-between;
   background: var(--bg-color);
   // height: 100vh;
-  padding: 40px 40px;
+  padding: 20px 40px;
   color: var(--text-color);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1019607843);
   width: 100%;
   position: relative;
   z-index: 999;
+  height: 90px;
 
   .logo {
     padding: 10px;
@@ -353,7 +350,7 @@ onUnmounted(() => {
 }
 
 .navMobileList {
-  padding: 130px 20px 0 20px;
+  padding: 90px 20px 0 20px;
   overflow: hidden;
   background: var(--bg-color);
   z-index: 888;
@@ -411,31 +408,25 @@ onUnmounted(() => {
     .logo {
       font-size: 18px;
     }
-
-    // font-size: 12px;
-    .nav_list {
-      li {
-        // padding: 10px !important;
-      }
-    }
   }
 }
 
 @media (max-width: 780px) {
   .navMobileList {
-    padding: 124px 20px 0 20px;
+    padding: 90px 20px 0 20px;
   }
 }
 
 @media (max-width: 668px) {
   .navMobileList {
-    padding: 118px 20px 0 20px;
+    padding: 90px 20px 0 20px;
   }
 }
 
 @media (max-width: 450px) {
   .global_nav {
     padding: 20px;
+    height: 78px;
   }
 
   .navMobileList {

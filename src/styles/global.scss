@@ -6,7 +6,7 @@
   --text-AColor: #fff;
   --clear-color: #408d86;
   --dull-color: #80cbc4;
-
+  --green-color:#d6ebd4;
   --detail-color: #ccc;
 }
 
@@ -14,6 +14,7 @@
   --bg-color: #1e293b;
   --text-color: #f0f6fc;
   --text-AColor: #1e293b;
+  --green-color:#1e293b;
 
   --clear-color: #2563eb;
   --dull-color: #598ef3;
@@ -82,14 +83,14 @@ div {
   opacity: 0;
   filter: blur(5px);
   transition: all 1s;
-  transform: translateY(100%);
+  transform: translateY(30%);
 }
 
 .activeObserve {
   opacity: 1;
   filter: blur(0px);
 
-  transform: translateX(0px);
+  transform: translateX(0px) !important;
 }
 
 .activeObserveY {

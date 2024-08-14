@@ -1,15 +1,23 @@
 import { reactive } from 'vue';
 
+import { noteList,noteItem } from './note/noteList';
+
 export interface ListItem {
     id?: number|string;
     title: string;
     router: string;
     childrenShowNav?: Boolean;
     text?:string;
-    children?: ListItem[];
+    children?: ListItem[]|noteItem[];
   }
 
 export const list = reactive<ListItem[]>([
+  {
+    id: "list111",
+    title: "其他",
+    router: "/other",
+    text: "汇总一些其他小内容更新",
+  },
   {
     id: "list1",
     title: "树结构+手风琴",

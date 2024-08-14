@@ -1,98 +1,51 @@
 <template>
   <div class="home_wrapper">
-    <div class="info_wrapper">
-      <div class="info_text">
-        <p>Hello!</p>
+    <div class="hero">
+      <div class="hero_wrap">
+        <div class="hero_bg">
+          <div class="bg bg-01"></div>
+          <div class="bg bg-02"></div>
+          <div class="bg bg-03"></div>
+        </div>
 
-        我是Enjun,这是我的个人网站，里面将会包括我遇到有趣的一些问题和效果，也会有相关网站和游戏分享！
-      </div>
-      <div class="info_img">
-        <!-- <el-image style="width: 600px" :src="infoUrl" /> -->
-        <img src="/src/assets/images/taolun.svg" v-lazyLoad> </img>
+        <div class="hero_catch">
+          <div class="hero_left">
+            <div class="hero_left_title">
+              <div data-aos="fade-left">H</div>
+              <div data-aos="fade-left" data-aos-delay="100">e</div>
+              <div data-aos="fade-left" data-aos-delay="200">l</div>
+              <div data-aos="fade-left" data-aos-delay="300">l</div>
+              <div data-aos="fade-left" data-aos-delay="400">o</div>
+            </div>
+            <div class="hero_left_text">一个辣鸡前端，记录记录</div>
+          </div>
+          <div class="hero_right"><HomeRight /></div>
+        </div>
       </div>
     </div>
 
-    <!-- <div class="info_title">开发过的项目</div> -->
-    <div class="card_wrapper1">
-      <a href="https://kira-learning.com/" target="_black" class="w7" v-observe="{ animationName: 'activeObserve' }">
-        <div class="w7_img">
-          <img src="/src/assets/images/kira.jpg" v-lazyLoad />
-        </div>
-        <div class="w7_text">
-          <p>kira learning官网</p>
-          在公司中进行独立开发的一个官网
-        </div>
-      </a>
-      <div class="w3" @click="router.push('/study')" v-observe="{ animationName: 'activeObserve' }">
-        <div class="w3_img">
-          <img src="/src/assets/images/kaifa.svg" v-lazyLoad />
-        </div>
-        <div class="w3_text">
-          <p>学习案例</p>
-          遇到的一些有趣的案例记录一下
+    <div class="xm" data-aos="fade-up" data-aos-once="true">
+      <div class="xm_header">
+        案例
+
+        <span class="deco"></span>
+      </div>
+      <div class="xm_content">
+        <div
+          class="xm_content_item"
+          v-for="item in xmList.xmList"
+          :key="item.id"
+          @click="() => router.push(item.router)"
+        >
+          <div class="xm_content_item_wrap">
+            <img src="/src/assets/images/bilibili/b1.webp" />
+          </div>
+          <div class="xm_content_item_textarea">{{ item.title }}</div>
         </div>
       </div>
     </div>
-    <div class="card_wrapper1">
-      <div class="w3" v-observe="{ animationName: 'activeObserve' }" @click="router.push('/navigation')">
-        <div class="w3_img">
-          <img src="/src/assets/images/2.5Dxuqiu.svg" v-lazyLoad />
-        </div>
-        <div class="w3_text">
-          <p>导航</p>
-          汇总一些我认为不错的一些网站
-        </div>
-      </div>
-      <a href="https://kira-learning.org/" target="_black" class="w7 w7R"
-        v-observe="{ animationName: 'activeObserve', move: 'right' }">
-        <div class="w7_text">
-          <p>kira学习平台</p>
-          负责大部分内容开发，包括登录、答题系统、答题创建、在线聊天、编辑器等等（目前没有账号，无法登陆）
-        </div>
-        <div class="w7_img">
-          <img src="/src/assets/images/kirapintai.jpg" v-lazyLoad />
-        </div>
-      </a>
-    </div>
-    <div class="waterfall-container">
-      <WaterFull :gap="20" :column="WaterFullColumn" :request="requestData" :page-size="9" :isScroll="true">
-        <template #item="{ item }">
-          <el-image :src="item.url" alt="图片" class="image" lazy></el-image>
-        </template>
-      </WaterFull>
-    </div>
-    <!-- <div class="more_wrapper">
-      <ul>
-        <li v-observe="{ animationName: 'activeObserve' }">
-          <CustomImg :src="urlI3" />
-        </li>
-        <li v-observe="{ animationName: 'activeObserve' }">
-          <CustomImg
-            :src="urlI3"
-            lazy
-            alt="1234566"
-            :preview-src-list="srcList"
-            :zoom-rate="1.2"
-            :max-scale="7"
-            :min-scale="0.2"
-            :initial-index="4"
-            fit="cover"
-          />
-        </li>
-        <li v-observe="{ animationName: 'activeObserve' }">
-          <el-image :src="urlI1" lazy />
-        </li>
-        <li v-observe="{ animationName: 'activeObserve', move: 'right' }">
-          <el-image :src="urlI4" lazy />
-        </li>
-        <li v-observe="{ animationName: 'activeObserve', move: 'right' }">
-          <el-image :src="urlI5" lazy />
-        </li>
-        <li v-observe="{ animationName: 'activeObserve', move: 'right' }">
-          <el-image :src="urlI2" lazy />
-        </li>
-      </ul>
-    </div> -->
+
+    <div style="height: 1000px"></div>
   </div>
 </template>
 
@@ -104,48 +57,51 @@ import { useRouter, useRoute } from "vue-router";
 import WaterFull from "@/components/WaterFull/index.vue";
 import type { IImageItem } from "@/components/WaterFull/type";
 
+import HomeRight from "@/views/home/components/HomeRight/index.vue";
+
+import { list, ListItem } from "../navList";
 
 const router = useRouter();
 
 const WaterFullColumn = ref(3);
 
-const screenWidth = ref(
-  window.innerWidth ||
-  document.documentElement.clientWidth ||
-  document.body.clientWidth
-);
+const xmList = reactive<{ xmList: ListItem[] }>({
+  xmList: [],
+});
 
 const infoUrl = ref();
 infoUrl.value = new URL(
   "../../assets/images/taolun.svg",
   import.meta.url
 ).pathname;
+// 获取屏幕宽度
+const screenWidth = ref(
+  window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth
+);
+// 获取滚动条位置
+const scrollTop = ref(window.scrollX);
 
 const requestData = (page: number, pageSize: number): Promise<IImageItem[]> => {
-
-  let url = `https://www.vilipix.com/api/v1/picture/public?limit=${9}&tags=%E9%A3%8E%E6%99%AF&from=pc_web&sort=new&offset=${9 * 9
-    }`
+  let url = `https://www.vilipix.com/api/v1/picture/public?limit=${9}&tags=%E9%A3%8E%E6%99%AF&from=pc_web&sort=new&offset=${
+    9 * 9
+  }`;
   // js获取当前是在什么设备，截取出来判断是pc还是手机
   const ua = navigator.userAgent;
   if (ua.indexOf("Windows") > -1) {
     // win系统
-
   } else {
-    url = `https://m.vilipix.com/api/v1/picture/public?limit=${9}&tags=%E9%A3%8E%E6%99%AF&sort=new&offset=${9 * 9}`
+    url = `https://m.vilipix.com/api/v1/picture/public?limit=${9}&tags=%E9%A3%8E%E6%99%AF&sort=new&offset=${
+      9 * 9
+    }`;
   }
-
-
 
   console.log(screenWidth.value);
 
-
   return new Promise<IImageItem[]>((resolve) => {
-    fetch(
-      url
-
-    ).then(async (res) => {
+    fetch(url).then(async (res) => {
       const result = await res.json();
-
 
       const imageList: IImageItem[] = result.data.rows.map((i: any) => ({
         id: i.picture_id,
@@ -172,6 +128,12 @@ watch(
   }
 );
 
+xmList.xmList = list.slice(0, 10);
+
+// 监听滚动条位置
+function handleScroll() {
+  scrollTop.value = window.scrollY;
+}
 function handleResize() {
   screenWidth.value =
     window.innerWidth ||
@@ -181,314 +143,195 @@ function handleResize() {
 
 onMounted(() => {
   window.addEventListener("resize", handleResize);
-
-
+  window.addEventListener("scroll", handleScroll);
 });
 
 onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
+  window.removeEventListener("scroll", handleResize);
 });
 </script>
 
 <style scoped lang="scss">
 .home_wrapper {
   background: var(--bg-color);
-}
 
-.card_wrapper1 {
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px 100px 40px 100px;
-
-  gap: 20px;
-  align-items: stretch;
-
-  .w7,
-  .w3 {
-    background: #f8f8f8;
-    border-radius: 8px;
-    padding: 20px;
-    cursor: pointer;
-
-    &:hover {
-      box-shadow: 0px 14px 40px 0px rgba(109, 141, 173, 0.25);
-      background: rgb(255, 255, 255);
+  .hero {
+    padding: 50px;
+    &_wrap {
+      border-radius: 20px;
+      background: var(--green-color);
+      // background: #d6ebd4;
+      position: relative;
     }
-  }
-
-  .w7 {
-    width: 70%;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    .w7_text {
-      flex: 1;
-      line-height: 1.8;
-
-      p {
-        font-size: 28px;
-      }
-    }
-
-    .w7_img {
-      width: 200px;
-
-      img {
-        width: 100%;
-      }
-    }
-  }
-
-  .w3 {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    // align-content: center;
-    align-items: center;
-    justify-content: center;
-
-    .w3_img {
-      width: 150px;
-      transform: translateY(0);
-
-      img {
-        width: 100%;
-        transition: transform 0.2s ease-in-out;
-      }
-    }
-
-    .w3_text {
-      padding: 0 30px;
-      line-height: 1.5;
-
-      p {
-        font-size: 28px;
-      }
-
-      text-align: center;
-    }
-
-    &:hover .w3_img {
-      transition: all 0.3s;
-      animation: shake 2s cubic-bezier(0.42, 0, 0.58, 1) infinite;
-    }
-  }
-
-  @keyframes shake {
-    0% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-10px);
-    }
-
-    100% {
-      transform: translateY(0);
-    }
-  }
-}
-
-.info_wrapper {
-  height: 750px;
-  display: flex;
-  align-items: center;
-  color: var(--text-color);
-
-  &>div {
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .info_text {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 0 0px 0 100px;
-    width: 50%;
-    font-size: 32px;
-    line-height: 1.6;
-
-    p {
-      font-size: 52px;
-    }
-  }
-
-  .info_img {
-    flex: 1;
-
-    img {
-      width: 600px;
-    }
-  }
-}
-
-// .info_title {
-//   margin: 70px 0;
-//   text-align: center;
-//   font-size: 38px;
-//   color: var(--text-color);
-// }
-
-.more_wrapper {
-  padding: 100px;
-  overflow: hidden;
-
-  ul {
-    column-count: 3;
-
-    li {
-      break-inside: avoid-column;
-      /* 防止li元素被分割到不同列 */
-      margin-bottom: 10px;
-      /* 设置li元素之间的下边距 */
-      background-color: #f0f0f0;
-      /* 设置背景颜色 */
-      padding: 10px;
-      /* 设置内边距 */
-
-      img {
-        width: 100%;
-      }
-    }
-  }
-}
-
-.waterfall-container {
-  margin: 100px;
-  // width: 100vw;
-  height: 500px;
-
-  .image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.wrapper_bg {
-  background: url(/src/assets/images/cool-background.png) no-repeat 100% 100%;
-  background-size: cover;
-}
-
-@media (max-width: 1080px) {
-  .info_wrapper {
-    height: 650px;
-
-    .info_text {
-      font-size: 22px;
-
-      p {
-        font-size: 42px;
-      }
-    }
-
-    .info_img {
-      img {
-        width: 400px;
-      }
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .info_wrapper {
-    height: 450px;
-
-    .info_text {
-      padding-left: 60px;
-
-      p {
-        font-size: 32px;
-      }
-
-      font-size: 18px;
-    }
-
-    .info_img {
-      img {
-        width: 300px;
-      }
-    }
-  }
-
-  .card_wrapper1 {
-    // padding: 40px;
-    padding: 20px 40px 30px 40px;
-  }
-
-  .waterfall-container {
-    margin: 40px;
-  }
-}
-
-@media (max-width: 668px) {
-  .info_wrapper {
-    .info_text {
-      padding-left: 40px;
-    }
-  }
-
-  .card_wrapper1 {
-    // padding: 40px;
-    padding: 20px 40px 30px 40px;
-
-    flex-direction: column;
-
-    .w3,
-    .w7 {
-      flex: 1;
-      width: 100%;
-    }
-
-    .w7 {
+    &_bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-direction: column;
-    }
-
-    .w7R {
-      flex-direction: column-reverse;
-    }
-  }
-
-  .waterfall-container {
-    margin: 40px;
-  }
-}
-
-@media (max-width: 450px) {
-  .info_wrapper {
-    flex-direction: column;
-
-    .info_text {
-      padding-left: 20px;
       width: 100%;
+      overflow: hidden;
+      z-index: 1;
+      .bg-01 {
+        background-image: url(/src/assets/images/home/hero-town01-1.png);
+        height: 216px;
+      }
+
+      .bg-03 {
+        background-image: url(/src/assets/images/home/hero-town01-1.png);
+        height: 274px;
+      }
+      .bg {
+        width: 100%;
+        background-size: auto 100%;
+        background-repeat: repeat-x;
+        background-position: center;
+        animation: bg_slide 60s linear infinite;
+      }
+
+      .bg-02 {
+        height: 258px;
+        margin-top: 2px;
+        margin-bottom: 12px;
+        background-image: url(/src/assets/images/home/hero-town01-1.png);
+
+        animation: bg_slide-r 60s linear infinite;
+      }
+      @keyframes bg_slide {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: -1128px 0;
+        }
+      }
+      @keyframes bg_slide-r {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 1128px 0;
+        }
+      }
+    }
+    &_catch {
+      position: relative;
+      z-index: 2;
+      height: 770px;
+      display: flex;
+      & > div {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 46px;
+      }
+      .hero_left {
+        flex-wrap: wrap;
+        // color: #4e5064;
+        color: var(--text-color);
+
+        &_title {
+          font-size: 45px;
+          font-weight: bold;
+          display: flex;
+        }
+        &_text {
+          margin-top: 5px;
+          font-size: 30px;
+          line-height: 40px;
+          opacity: 0.8;
+        }
+      }
     }
   }
 
-  .card_wrapper1 {
-    // padding: 40px;
-    padding: 10px 20px 20px 20px;
+  .xm {
+    border-radius: 1rem;
+    border: solid 4px #313131;
+    background-color: #fff;
+    box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    // height: 100px;
+    &_header {
+      position: relative;
+      padding: 0.5em;
+      font-size: 1.75rem;
+      letter-spacing: 0.1em;
+      text-align: center;
+      color: #fff;
+      background-color: #62a366;
+      border-bottom: solid 4px #313131;
+      border-radius: 0.7rem 0.7rem 0 0;
+      .deco {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 1em;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 0.75rem;
+        align-items: center;
 
-    flex-direction: column;
-
-    .w3,
-    .w7 {
-      flex: 1;
-      width: 100%;
+        &::after,
+        &::before {
+          content: "";
+          display: block;
+          width: 1rem;
+          aspect-ratio: 1 / 1;
+          border-radius: 50%;
+        }
+        &::after {
+          background-color: #eecb90;
+        }
+        &::before {
+          background-color: #9dd2ed;
+        }
+      }
     }
-  }
 
-  .waterfall-container {
-    margin: 20px;
-    // ul {
-    //   column-count: 1;
-    // }
+    &_content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 2rem;
+      gap: 2rem;
+      padding: 30px;
+      &_item {
+        color: var(--text-color);
+        border-radius: 1rem;
+        border: solid 4px #313131;
+        background-color: var(--bg-color);
+        box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease-out;
+        cursor: pointer;
+        &:hover {
+          border-color: #448547;
+          transform: translateY(-10px);
+        }
+        &_wrap {
+          img {
+            width: 100%;
+            height: 267px;
+            display: block;
+            // aspect-ratio: 360 / 240;
+            border-radius: 0.7rem 0.7rem 0 0;
+            overflow: hidden;
+            object-fit: cover;
+          }
+        }
+      }
+      &_item:nth-child(1),
+      &_item:nth-child(2) {
+        grid-row: 1 / 3;
+      }
+    }
   }
 }
 </style>

@@ -77,6 +77,10 @@ const routes = [
         path: "/video",
         name: "video",
         component: () => import("../views/study/video/index.vue"),
+      }, {
+        path: "/other",
+        name: "other",
+        component: () => import("../views/study/other/index.vue"),
       },
       {
         path: "/markDown",

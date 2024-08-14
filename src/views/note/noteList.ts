@@ -1,7 +1,9 @@
-export interface Item {
+export interface noteItem {
   id: string | number;
   title: string;
   text: string;
+  router?:string;
+  children?: noteItem[];
 }
 
 export const noteList = [
@@ -167,9 +169,11 @@ export const noteList = [
       },
       { type: "space", raw: "\n\n\n" },
     ],
+    router:'/noteInfo/note1'
   },
   {
     id: "note2",
+    router:'/noteInfo/note2',
     title: "简单学习一下three.js",
     text: "学习three初步上手",
     tag: ["three", "js"],
@@ -265,6 +269,7 @@ export const noteList = [
         text: '// 生成一个球体\nconst sphereGeometry = new SphereGeometry(4);\nconst sphereMaterial = new MeshBasicMaterial({\n  color: "#fcfcfc",\n  wireframe: true, //是否为线框\n});\nconst sphere = new Mesh(sphereGeometry, sphereMaterial);\n',
       },
     ],
+
   },
 ];
 

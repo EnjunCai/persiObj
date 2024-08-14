@@ -3,7 +3,7 @@ import { DirectiveBinding } from "vue";
 const activeIntersection = new IntersectionObserver((entries, observer) => {
   entries.forEach((entry) => {
     let target = entry.target as HTMLElement;
-
+     
     if (entry.isIntersecting) {
       if (target.dataset.move == "bottom") {
         entry.target.classList.add(target.dataset.active || "activeObserveY");
@@ -40,3 +40,9 @@ export const observe = {
     activeIntersection.unobserve(el);
   },
 };
+
+
+
+
+
+

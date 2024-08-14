@@ -15,17 +15,17 @@ import NavBar from "@/components/NavBar.vue";
 </script>
 <style scoped lang="scss">
 .content_wrapper {
-  padding-top: 130px;
+  padding-top: 90px;
   // margin-top: 130px;
 }
 @media (max-width: 780px) {
   .content_wrapper {
-    padding-top: 124px;
+    padding-top: 90px;
   }
 }
 @media (max-width: 668px) {
   .content_wrapper {
-    padding-top: 118px;
+    padding-top: 90px;
   }
 }
 @media (max-width: 450px) {
