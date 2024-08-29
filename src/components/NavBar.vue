@@ -15,17 +15,17 @@
       <div v-else class="nav_list">
         <ul ref="ulParent">
           <div ref="activeBgRef" class="active_bg"></div>
-          <li
-            v-for="(item, index) in barList"
-            :key="item.id"
-            :class="{
-              active: navIndex == index,
-            }"
-            @click.stop="navClick(item.router, index, $el)"
-            ref="listItem"
-          >
-            {{ item.title }}
-          </li>
+          <template v-for="(item, index) in barList" :key="item.id">
+            <li
+              :class="{
+                active: navIndex == index,
+              }"
+              @click.stop="navClick(item.router, index, $el)"
+              ref="listItem"
+            >
+              {{ item.title }}
+            </li>
+          </template>
         </ul>
         <CheckTheme />
         <div class="login_info_wrapper">
@@ -95,7 +95,7 @@ const screenWidth = ref(
     document.body.clientWidth
 );
 const routerParams = ref(route.params.id);
-const barList: ListItem[] = [
+const barList: ListItem[] = reactive([
   { id: 1, title: "首页", router: "/home" },
   {
     id: 2,
@@ -103,7 +103,6 @@ const barList: ListItem[] = [
     router: "/study",
     children: list,
   },
-  // { id: 3, title: "学习", router: "/study" },
   { id: 4, title: "导航中心", router: "/navigation" },
   {
     id: 5,
@@ -112,9 +111,35 @@ const barList: ListItem[] = [
     childrenShowNav: true,
     children: noteList,
   },
-  // { id: 5, title: "休闲", router: "/game" },
+
   { id: 6, title: "其他", router: "/other12" },
-];
+]);
+watch(
+  () => userStore.userInfo?.role,
+  (to, from) => {
+    // console.log(to, from);
+    const obj = {
+      id: barList.length + 1, // 动态生成的 id
+      title: "管理",
+      router: "/admin",
+      requiresAdmin: true,
+    };
+    if (to === "admin") {
+      // 如果是 admin，检查 "管理" 菜单项是否已经存在
+      const exists = barList.some((item) => item.title === "管理");
+      if (!exists) {
+        // 如果不存在，则添加到数组中
+        barList.push(obj);
+      }
+    } else {
+      // 如果不是 admin，则删除数组中的最后一项（假设最后一项是“管理”菜单）
+      if (barList.length > 0 && barList[barList.length - 1].title === "管理") {
+        barList.pop(); // 删除最后一项
+      }
+    }
+  },
+  { immediate: true }
+);
 
 watch(
   () => route.fullPath,

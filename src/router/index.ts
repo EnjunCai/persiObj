@@ -5,6 +5,8 @@ import {
   createWebHistory,
 } from "vue-router";
 
+import useUserStore from "@/store/user";
+
 const routes = [
   {
     path: "/",
@@ -133,6 +135,11 @@ const routes = [
     component: () => import("../views/study/resize/index.vue"),
   },
   {
+    path: '/admin',
+    component: () => import("@/views/admin/index.vue"),
+    meta: { requiresAdmin: true },
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("../views/login/index.vue"),
@@ -144,9 +151,24 @@ const routes = [
   },
 ];
 
+
+
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  
+  if (to.meta.requiresAdmin && userStore.userInfo?.role !== 'admin') {
+    // 如果用户没有 admin 权限，阻止导航到 /admin
+    next({ path: '/' });
+  } else {
+    next(); // 允许访问
+  }
 });
 
 export default router;
