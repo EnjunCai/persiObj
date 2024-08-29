@@ -13,6 +13,12 @@ export interface ListItem {
 
 export const list = reactive<ListItem[]>([
   {
+    id: "listWebIDE",
+    title: "web ide",
+    router: "/webIDE",
+    text: "web版本文件和文件夹读取，文件修改保存，图片预览",
+  },
+  {
     id: "list111",
     title: "其他",
     router: "/other",

@@ -15,6 +15,7 @@
 import other1 from "./components/other1.vue";
 import chunksFile from "./components/chunksFile.vue";
 import w10rl from "./components/w10rl.vue";
+import { onBeforeMount, onMounted } from "vue";
 </script>
 
 <style lang="scss" scoped>

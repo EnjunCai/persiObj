@@ -5,7 +5,12 @@ import App from "./App.vue";
 
 import router from "./router";
 
-import pinia from "./store";
+
+// pinia
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate)
 
 import "@/assets/iconfont/iconfont.css";
 import "@/assets/iconfont/iconfont.js";

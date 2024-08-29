@@ -28,6 +28,21 @@
           </li>
         </ul>
         <CheckTheme />
+        <div class="login_info_wrapper">
+          <div class="info_wrapper" v-if="userStore.token">
+            <div>{{ userStore.userInfo?.username }}</div>
+            <div
+              @click="userStore.clearUser()"
+              style="font-size: 12px; color: #0078d4; cursor: pointer"
+            >
+              退出登录
+            </div>
+          </div>
+          <button v-else class="loginBtn" @click="router.push('/login')">
+            <div class="svg-wrapper-1"></div>
+            <span>Login</span>
+          </button>
+        </div>
       </div>
     </nav>
   </div>
@@ -53,6 +68,8 @@
 <script setup lang="ts">
 import { ref, reactive, watch, onMounted, nextTick, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import useUserStore from "@/store/user";
+
 import CheckTheme from "./CheckTheme.vue";
 
 import useGlobalStore from "@/store/globalStore";
@@ -61,6 +78,8 @@ import { noteList, noteItem } from "@/views/note/noteList";
 
 const router = useRouter();
 const route = useRoute();
+
+const userStore = useUserStore();
 
 const navIndex = ref(0);
 // 控制导航背景
@@ -94,7 +113,7 @@ const barList: ListItem[] = [
     children: noteList,
   },
   // { id: 5, title: "休闲", router: "/game" },
-  { id: 6, title: "其他", router: "/other" },
+  { id: 6, title: "其他", router: "/other12" },
 ];
 
 watch(
@@ -379,6 +398,49 @@ onUnmounted(() => {
 .openMobileList {
   height: 100vh;
   // transform: translateY(0);
+}
+.login_info_wrapper {
+  margin-left: 10px;
+  .info_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .loginBtn {
+    font-family: inherit;
+    font-size: 18px;
+    background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    cursor: pointer;
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    &:active {
+      transform: scale(0.95);
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .svg-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin-right: 0.5em;
+      transition: all 0.3s;
+    }
+  }
 }
 
 @keyframes rainbow-text-animation-rev {

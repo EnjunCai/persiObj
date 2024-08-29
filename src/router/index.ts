@@ -120,6 +120,10 @@ const routes = [
         path: "/MyTable",
         name: "MyTable",
         component: () => import("../views/study/MyTable/index.vue"),
+      },{
+        path: "/webIDE",
+        name: "webIDE",
+        component: () => import("../views/study/webIDE/index.vue"),
       },
     ],
   },
@@ -128,7 +132,11 @@ const routes = [
     name: "resize",
     component: () => import("../views/study/resize/index.vue"),
   },
-
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/login/index.vue"),
+  },
   {
     path: "/:catchAll(.*)",
     name: "not-found",

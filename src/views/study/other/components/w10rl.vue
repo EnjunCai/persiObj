@@ -14,6 +14,8 @@
 <script setup lang="ts">
 import { useMousePosition } from "./useMousePosition";
 import { ref, getCurrentInstance, computed } from "vue";
+import { onBeforeMount, onMounted } from "vue";
+
 const vm = getCurrentInstance();
 console.log(vm);
 
