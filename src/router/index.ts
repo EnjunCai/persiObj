@@ -126,7 +126,12 @@ const routes = [
         path: "/webIDE",
         name: "webIDE",
         component: () => import("../views/study/webIDE/index.vue"),
+      },{
+        path: "/imageMagnifier",
+        name: "imageMagnifier",
+        component: () => import("../views/study/imageMagnifier/index.vue"),
       },
+      
     ],
   },
   {

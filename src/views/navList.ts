@@ -52,6 +52,11 @@ export const list = reactive<ListItem[]>([
     title: "抽奖",
     router: "/lotteryDraw",
     text: "几种抽奖模式",
+  },{
+    id: "listfdj",
+    title: "图片放大镜",
+    router: "/imageMagnifier",
+    text: "",
   },
   {
     id: "list6",
