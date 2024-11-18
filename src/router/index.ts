@@ -130,6 +130,10 @@ const routes = [
         path: "/imageMagnifier",
         name: "imageMagnifier",
         component: () => import("../views/study/imageMagnifier/index.vue"),
+      },{
+        path: "/ddm",
+        name: "ddm",
+        component: () => import("../views/study/ddm/index.vue"),
       },
       
     ],

@@ -26,6 +26,7 @@ declare module 'vue' {
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTextarea: typeof import('element-plus/es')['ElTextarea']
     Icon: typeof import('./src/components/Icon.vue')['default']
     IconTagI: typeof import('./src/components/IconTagI.vue')['default']
     MyAudio: typeof import('./src/components/MyAudio.vue')['default']

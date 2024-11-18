@@ -32,7 +32,8 @@
     "vue": "^3.3.13",
     "vue-demi": "^0.14.7",
     "vue-qrcode-reader": "^5.5.4",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",

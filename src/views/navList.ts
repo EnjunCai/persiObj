@@ -13,6 +13,12 @@ export interface ListItem {
 
 export const list = reactive<ListItem[]>([
   {
+    id: "ddm",
+    title: "低代码拖拽",
+    router: "/ddm",
+    text: "低代码拖拽",
+  },
+  {
     id: "listWebIDE",
     title: "web ide",
     router: "/webIDE",
