@@ -20,6 +20,8 @@ declare module 'vue' {
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElRadio: typeof import('element-plus/es')['ElRadio']
+    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     Icon: typeof import('./src/components/Icon.vue')['default']
     IconTagI: typeof import('./src/components/IconTagI.vue')['default']

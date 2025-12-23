@@ -1,15 +1,15 @@
-import { reactive } from 'vue';
+import { reactive } from "vue";
 
-import { noteList,noteItem } from './note/noteList';
+import { noteList, noteItem } from "./note/noteList";
 
 export interface ListItem {
-    id?: number|string;
-    title: string;
-    router: string;
-    childrenShowNav?: Boolean;
-    text?:string;
-    children?: ListItem[]|noteItem[];
-  }
+  id?: number | string;
+  title: string;
+  router: string;
+  childrenShowNav?: Boolean;
+  text?: string;
+  children?: ListItem[] | noteItem[];
+}
 
 export const list = reactive<ListItem[]>([
   {
@@ -58,7 +58,8 @@ export const list = reactive<ListItem[]>([
     title: "抽奖",
     router: "/lotteryDraw",
     text: "几种抽奖模式",
-  },{
+  },
+  {
     id: "listfdj",
     title: "图片放大镜",
     router: "/imageMagnifier",
@@ -82,12 +83,12 @@ export const list = reactive<ListItem[]>([
     router: "/CardExpansion",
     text: "卡片点击放大效果",
   },
-//   {
-//     id: "list10",
-//     title: "自定义视频组件(开发中)",
-//     router: "/video",
-//     text: "自定义视频组件",
-//   },
+  //   {
+  //     id: "list10",
+  //     title: "自定义视频组件(开发中)",
+  //     router: "/video",
+  //     text: "自定义视频组件",
+  //   },
   {
     id: "list14",
     title: "地图",
@@ -111,5 +112,29 @@ export const list = reactive<ListItem[]>([
     title: "二次封装表格",
     router: "/MyTable",
     text: "二次封装表格",
+  },
+  {
+    id: "list16",
+    title: "i18n多语言",
+    router: "/i18nView",
+    text: "i18n多语言",
+  },
+  {
+    id: "list17",
+    title: "chartDemo",
+    router: "/chartDemo",
+    text: "chartDemo",
+  },
+  {
+    id: "canvasDemo11",
+    title: "canvasDemo",
+    router: "/canvasDemo",
+    text: "canvasDemo",
+  },
+  {
+    id: "virtualList",
+    title: "虚拟列表",
+    router: "/virtualList",
+    text: "虚拟列表",
   },
 ]);

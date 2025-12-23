@@ -79,7 +79,8 @@ const routes = [
         path: "/video",
         name: "video",
         component: () => import("../views/study/video/index.vue"),
-      }, {
+      },
+      {
         path: "/other",
         name: "other",
         component: () => import("../views/study/other/index.vue"),
@@ -118,24 +119,47 @@ const routes = [
         path: "/map",
         name: "map",
         component: () => import("../views/study/map/index.vue"),
-      },  {
+      },
+      {
         path: "/MyTable",
         name: "MyTable",
         component: () => import("../views/study/MyTable/index.vue"),
-      },{
+      },
+      {
         path: "/webIDE",
         name: "webIDE",
         component: () => import("../views/study/webIDE/index.vue"),
-      },{
+      },
+      {
         path: "/imageMagnifier",
         name: "imageMagnifier",
         component: () => import("../views/study/imageMagnifier/index.vue"),
-      },{
+      },
+      {
         path: "/ddm",
         name: "ddm",
         component: () => import("../views/study/ddm/index.vue"),
       },
-      
+      {
+        path: "/i18nView",
+        name: "i18nView",
+        component: () => import("../views/study/i18nView/index.vue"),
+      },
+      {
+        path: "/chartDemo",
+        name: "chartDemo",
+        component: () => import("../views/study/chartDemo/index.vue"),
+      },
+      {
+        path: "/canvasDemo",
+        name: "canvasDemo",
+        component: () => import("../views/study/canvasDemo/index.vue"),
+      },
+      {
+        path: "/virtualList",
+        name: "virtualList",
+        component: () => import("../views/study/virtualList/index.vue"),
+      },
     ],
   },
   {
@@ -144,7 +168,7 @@ const routes = [
     component: () => import("../views/study/resize/index.vue"),
   },
   {
-    path: '/admin',
+    path: "/admin",
     component: () => import("@/views/admin/index.vue"),
     meta: { requiresAdmin: true },
   },
@@ -160,21 +184,17 @@ const routes = [
   },
 ];
 
-
-
-
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
 
-
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
-  
-  if (to.meta.requiresAdmin && userStore.userInfo?.role !== 'admin') {
+
+  if (to.meta.requiresAdmin && userStore.userInfo?.role !== "admin") {
     // 如果用户没有 admin 权限，阻止导航到 /admin
-    next({ path: '/' });
+    next({ path: "/" });
   } else {
     next(); // 允许访问
   }

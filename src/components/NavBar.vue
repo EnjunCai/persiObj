@@ -2,6 +2,7 @@
   <div class="global_wrapper">
     <nav class="global_nav">
       <div class="logo" @click="router.push('/home')">Enjun blog</div>
+
       <!-- 小于780窗口显示 -->
       <div v-if="screenWidth <= 780" class="mobileBtn" @click="checkMobileOpen">
         <!-- <input type="checkbox" id="checkbox" /> -->

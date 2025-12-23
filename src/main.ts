@@ -3,6 +3,8 @@ import { createApp } from "vue";
 import "./styles/global.scss";
 import App from "./App.vue";
 
+import i18n from "./i18n/index";
+
 import router from "./router";
 
 
@@ -53,6 +55,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 // 切换路由顶部进度条
 setupRouterGuard(router);
 
+
+app.use(i18n);
 app.use(router);
 app.use(pinia);
 // app.use(ElementPlus);
