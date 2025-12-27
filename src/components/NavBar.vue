@@ -20,17 +20,48 @@
       </div>
 
       <div class="actions">
-        <el-button
-          v-if="!userStore.userInfo"
-          size="small"
-          round
-          @click="router.push('/login')"
-        >
-          登录
-        </el-button>
-        <div v-else class="user-avatar" @click="router.push('/admin')">
-          <span>{{ userStore.userInfo.email?.charAt(0).toUpperCase() }}</span>
+        <div v-if="!userStore.userInfo">
+          <el-button
+            type="primary"
+            size="small"
+            round
+            @click="router.push('/login')"
+          >
+            登录 / 注册
+          </el-button>
         </div>
+
+        <el-dropdown v-else trigger="hover" @command="handleCommand">
+          <div class="user-avatar-trigger">
+            <el-avatar
+              :size="36"
+              class="avatar-img"
+              :src="userStore.userInfo.user_metadata?.avatar_url"
+            >
+              {{ userStore.userInfo.email?.charAt(0).toUpperCase() }}
+            </el-avatar>
+            <span class="username">{{
+              userStore.userInfo.email?.split("@")[0]
+            }}</span>
+            <el-icon class="el-icon--right"><arrow-down /></el-icon>
+          </div>
+
+          <template #dropdown>
+            <el-dropdown-menu class="custom-dropdown">
+              <el-dropdown-item command="admin" icon="Setting"
+                >管理中心</el-dropdown-item
+              >
+              <el-dropdown-item
+                divided
+                command="logout"
+                icon="SwitchButton"
+                style="color: #f56c6c"
+              >
+                退出登录
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
   </div>
@@ -40,8 +71,8 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import useUserStore from "@/store/user";
-// 如果你需要图标，可以引入 element-plus 的图标，这里作为示例
-// import { House, Notebook, Compass, ... } from '@element-plus/icons-vue'
+import { ArrowDown, Setting, SwitchButton } from "@element-plus/icons-vue"; // 引入图标
+import { ElMessage } from "element-plus";
 
 const router = useRouter();
 const route = useRoute();
@@ -50,34 +81,46 @@ const userStore = useUserStore();
 // 滚动监听状态
 const isScrolled = ref(false);
 
-// 菜单配置
+// 导航菜单配置 (按你要求的顺序)
 const menuList = [
   { label: "首页", path: "/home", name: "home" },
+  { label: "笔记", path: "/note", name: "note" },
   { label: "学习", path: "/study", name: "study" },
-  { label: "笔记", path: "/note", name: "note" }, // 笔记列表
-  { label: "导航", path: "/navigation", name: "navigation" }, // 导航合集
+  { label: "导航", path: "/navigation", name: "navigation" },
   { label: "娱乐", path: "/game", name: "game" },
-  // { label: "关于", path: "/about", name: "about" },
 ];
 
-// 判断当前路由是否激活
+// 路由高亮判断
 const isActive = (path: string) => {
-  // 特殊处理：如果是根路径
   if (path === "/" && route.path === "/") return true;
   if (path === "/") return false;
-
-  // 核心逻辑：当前路由包含了菜单路径就高亮
-  // 比如：当前是 /noteInfo/123，菜单是 /note，这里我们手动判断一下
-  if (path === "/note" && route.path.includes("note")) return true;
-
-  return route.path.startsWith(path);
+  // 包含匹配，例如 /noteInfo/1 也会高亮 /note
+  return (
+    route.path.startsWith(path) ||
+    (path === "/note" && route.path.includes("note"))
+  );
 };
 
 const handleNavigate = (item: any) => {
   router.push(item.path);
 };
 
-// 监听滚动，改变导航栏背景
+// 下拉菜单指令处理
+const handleCommand = async (command: string) => {
+  if (command === "logout") {
+    try {
+      await userStore.logout();
+      ElMessage.success("已退出登录");
+      router.push("/login"); // 退出后跳回登录页或首页
+    } catch (error) {
+      ElMessage.error("退出失败");
+    }
+  } else if (command === "admin") {
+    router.push("/admin");
+  }
+};
+
+// 滚动效果
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 20;
 };
@@ -100,12 +143,12 @@ onUnmounted(() => {
   height: 64px;
   z-index: 999;
   transition: all 0.3s ease-in-out;
-  background: rgba(255, 255, 255, 0.6); // 默认半透明
-  backdrop-filter: blur(8px); // 毛玻璃
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.7); // 默认高透
+  backdrop-filter: blur(10px); // 毛玻璃效果
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 
   &.scrolled {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   }
 
@@ -123,62 +166,53 @@ onUnmounted(() => {
       align-items: center;
       gap: 10px;
       cursor: pointer;
-      font-weight: bold;
-      font-size: 20px;
-      color: #333;
 
       .logo-img {
-        width: 24px;
-        height: 24px;
+        width: 28px;
+        height: 28px;
+      }
+      .logo-text {
+        font-size: 20px;
+        font-weight: 700;
+        color: #333;
+        letter-spacing: -0.5px;
       }
     }
 
     .menu {
       display: flex;
-      align-items: center;
-      gap: 30px;
+      gap: 32px;
 
       .menu-item {
         position: relative;
         cursor: pointer;
-        padding: 8px 0;
         font-size: 16px;
-        color: #666;
-        transition: color 0.3s;
+        color: #555;
         font-weight: 500;
+        transition: color 0.3s;
+        padding: 5px 0;
 
-        &:hover {
-          color: #42b883; // Vue Green
-        }
-
+        &:hover,
         &.active {
           color: #42b883;
-          font-weight: 600;
-
-          .active-bar {
-            width: 100%;
-            opacity: 1;
-          }
         }
 
+        // 底部高亮条动画
         .active-bar {
           position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 0%;
-          height: 3px;
-          background-color: #42b883;
-          border-radius: 2px;
-          transition: all 0.3s ease;
-          opacity: 0;
+          bottom: -20px; // 距离文字的距离
           left: 50%;
-          transform: translateX(-50%);
+          transform: translateX(-50%) scaleX(0);
+          width: 20px;
+          height: 3px;
+          background: #42b883;
+          border-radius: 4px;
+          transition: transform 0.3s ease;
         }
 
-        // Hover 时的动效
-        &:hover .active-bar {
-          width: 50%;
-          opacity: 0.5;
+        &.active .active-bar {
+          bottom: -22px; // 对齐 navbar 底部
+          transform: translateX(-50%) scaleX(1.5);
         }
       }
     }
@@ -187,43 +221,43 @@ onUnmounted(() => {
       display: flex;
       align-items: center;
 
-      .user-avatar {
-        width: 32px;
-        height: 32px;
-        background: #42b883;
-        border-radius: 50%;
-        color: white;
+      // 用户头像触发区样式
+      .user-avatar-trigger {
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 8px;
         cursor: pointer;
-        font-weight: bold;
-        font-size: 14px;
+        padding: 4px 8px;
+        border-radius: 20px;
+        transition: background 0.3s;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.05);
+        }
+
+        .avatar-img {
+          background: #42b883;
+          font-weight: 600;
+          color: white;
+        }
+
+        .username {
+          font-size: 14px;
+          color: #333;
+          max-width: 100px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
     }
   }
 }
 
-// 移动端简单适配：隐藏菜单，以后可以加汉堡按钮
+// 移动端适配：隐藏中间菜单
 @media (max-width: 768px) {
-  .navbar-wrapper .navbar-content {
-    .menu {
-      display: none; // 或者改成底部导航栏
-    }
-
-    // 如果你想在移动端显示简版菜单，可以解开下面注释并调整样式
-    /*
-    .menu {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: white;
-      justify-content: space-around;
-      padding: 10px 0;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-    }
-    */
+  .navbar-wrapper .navbar-content .menu {
+    display: none;
   }
 }
 </style>

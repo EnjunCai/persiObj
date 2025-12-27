@@ -1,343 +1,266 @@
 <template>
-  <div class="home_wrapper">
-    <div class="hero">
-      <div class="hero_wrap">
-        <div class="hero_bg">
-          <div class="bg bg-01"></div>
-          <div class="bg bg-02"></div>
-          <div class="bg bg-03"></div>
+  <div class="home-container">
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="content-wrapper">
+      <div class="text-section" v-scroll-reveal>
+        <div class="badge">Full Stack Developer</div>
+        <h1 class="title">
+          Hi, I'm <span class="highlight">Enjun</span><br />
+          Building <span class="typing-effect">Digital Dreams</span>
+        </h1>
+        <p class="subtitle">
+          热衷于 Vue生态与图形可视化的前端开发者。<br />
+          在这里记录我的学习历程、技术笔记与创意实验。
+        </p>
+
+        <div class="btn-group">
+          <el-button
+            type="primary"
+            size="large"
+            class="cta-btn primary"
+            @click="router.push('/study')"
+          >
+            浏览项目 <el-icon class="el-icon--right"><ArrowRight /></el-icon>
+          </el-button>
+          <el-button size="large" class="cta-btn secondary" @click="openGithub">
+            <template #icon>
+              <img
+                src="@/assets/images/home/hero-town02.png"
+                style="width: 20px; filter: grayscale(1)"
+              />
+            </template>
+            GitHub
+          </el-button>
         </div>
 
-        <div class="hero_catch">
-          <div class="hero_left">
-            <div class="hero_left_title">
-              <div data-aos="fade-left">H</div>
-              <div data-aos="fade-left" data-aos-delay="100">e</div>
-              <div data-aos="fade-left" data-aos-delay="200">l</div>
-              <div data-aos="fade-left" data-aos-delay="300">l</div>
-              <div data-aos="fade-left" data-aos-delay="400">o</div>
-            </div>
-            <div class="hero_left_text">一个辣鸡前端，记录记录</div>
+        <div class="stats-row">
+          <div class="stat-item">
+            <h3>20+</h3>
+            <p>Demo Projects</p>
           </div>
-          <div class="hero_right"><HomeRight /></div>
+          <div class="stat-item">
+            <h3>50+</h3>
+            <p>Tech Notes</p>
+          </div>
         </div>
+      </div>
+
+      <div class="visual-section">
+        <HomeRight />
       </div>
     </div>
-
-    <div class="xm" data-aos="fade-up" data-aos-once="true">
-      <div class="xm_header">
-        案例
-
-        <span class="deco"></span>
-      </div>
-      <div class="xm_content">
-        <div
-          class="xm_content_item"
-          v-for="item in xmList.xmList"
-          :key="item.id"
-          @click="() => router.push(item.router)"
-        >
-          <div class="xm_content_item_wrap">
-            <img src="/src/assets/images/bilibili/b1.webp" />
-          </div>
-          <div class="xm_content_item_textarea">{{ item.title }}</div>
-        </div>
-      </div>
-    </div>
-
-    <div style="height: 1000px"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watch, onMounted, onUnmounted } from "vue";
-
-import { useRouter, useRoute } from "vue-router";
-
-import WaterFull from "@/components/WaterFull/index.vue";
-import type { IImageItem } from "@/components/WaterFull/type";
-
-import HomeRight from "@/views/home/components/HomeRight/index.vue";
-
-import { list, ListItem } from "../navList";
-
-import useUserStore from "@/store/user";
-
-const userStore = useUserStore();
-
-console.log(userStore.userInfo);
+import { useRouter } from "vue-router";
+import HomeRight from "./components/HomeRight/index.vue";
+import { ArrowRight } from "@element-plus/icons-vue"; // 确保引入图标
 
 const router = useRouter();
 
-const WaterFullColumn = ref(3);
-
-const xmList = reactive<{ xmList: ListItem[] }>({
-  xmList: [],
-});
-
-const infoUrl = ref();
-infoUrl.value = new URL(
-  "../../assets/images/taolun.svg",
-  import.meta.url
-).pathname;
-// 获取屏幕宽度
-const screenWidth = ref(
-  window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth
-);
-// 获取滚动条位置
-const scrollTop = ref(window.scrollX);
-
-const requestData = (page: number, pageSize: number): Promise<IImageItem[]> => {
-  let url = `https://www.vilipix.com/api/v1/picture/public?limit=${9}&tags=%E9%A3%8E%E6%99%AF&from=pc_web&sort=new&offset=${
-    9 * 9
-  }`;
-  // js获取当前是在什么设备，截取出来判断是pc还是手机
-  const ua = navigator.userAgent;
-  if (ua.indexOf("Windows") > -1) {
-    // win系统
-  } else {
-    url = `https://m.vilipix.com/api/v1/picture/public?limit=${9}&tags=%E9%A3%8E%E6%99%AF&sort=new&offset=${
-      9 * 9
-    }`;
-  }
-
-  console.log(screenWidth.value);
-
-  return new Promise<IImageItem[]>((resolve) => {
-    fetch(url).then(async (res) => {
-      const result = await res.json();
-
-      const imageList: IImageItem[] = result.data.rows.map((i: any) => ({
-        id: i.picture_id,
-        url: i.original_url,
-        height: i.height,
-        width: i.width,
-      }));
-      resolve(imageList);
-    });
-  });
+const openGithub = () => {
+  window.open("https://github.com/EnjunCai", "_blank");
 };
-
-watch(
-  () => screenWidth.value,
-  (val) => {
-    // console.log(val);
-    if (val < 1024) {
-      WaterFullColumn.value = 2;
-    } else if (val < 768) {
-      WaterFullColumn.value = 1;
-    } else {
-      WaterFullColumn.value = 3;
-    }
-  }
-);
-
-xmList.xmList = list.slice(0, 10);
-
-// 监听滚动条位置
-function handleScroll() {
-  scrollTop.value = window.scrollY;
-}
-function handleResize() {
-  screenWidth.value =
-    window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth;
-}
-
-onMounted(() => {
-  window.addEventListener("resize", handleResize);
-  window.addEventListener("scroll", handleScroll);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("resize", handleResize);
-  window.removeEventListener("scroll", handleResize);
-});
 </script>
 
 <style scoped lang="scss">
-.home_wrapper {
-  background: var(--bg-color);
+.home-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #fdfdfd; // 浅色背景
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .hero {
-    padding: 50px;
-    &_wrap {
-      border-radius: 20px;
-      background: var(--green-color);
-      // background: #d6ebd4;
+// 背景光晕动画
+.bg-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+  z-index: 0;
+  animation: float 10s infinite alternate ease-in-out;
+}
+.bg-glow-1 {
+  top: -100px;
+  left: -100px;
+  background: #42b883;
+}
+.bg-glow-2 {
+  bottom: -100px;
+  right: -100px;
+  background: #35495e;
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(50px, 50px);
+  }
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 40px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr; // 左侧稍宽
+  gap: 60px;
+  align-items: center;
+}
+
+.text-section {
+  .badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(66, 184, 131, 0.1);
+    color: #42b883;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .title {
+    font-size: 64px;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+
+    .highlight {
+      color: #42b883;
       position: relative;
-    }
-    &_bg {
-      position: absolute;
-      left: 0;
-      top: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      width: 100%;
-      overflow: hidden;
-      z-index: 1;
-      .bg-01 {
-        background-image: url(/src/assets/images/home/hero-town01-1.png);
-        height: 216px;
-      }
-
-      .bg-03 {
-        background-image: url(/src/assets/images/home/hero-town01-1.png);
-        height: 274px;
-      }
-      .bg {
+      // 下划线装饰
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 5px;
+        left: 0;
         width: 100%;
-        background-size: auto 100%;
-        background-repeat: repeat-x;
-        background-position: center;
-        animation: bg_slide 60s linear infinite;
-      }
-
-      .bg-02 {
-        height: 258px;
-        margin-top: 2px;
-        margin-bottom: 12px;
-        background-image: url(/src/assets/images/home/hero-town01-1.png);
-
-        animation: bg_slide-r 60s linear infinite;
-      }
-      @keyframes bg_slide {
-        0% {
-          background-position: 0 0;
-        }
-        100% {
-          background-position: -1128px 0;
-        }
-      }
-      @keyframes bg_slide-r {
-        0% {
-          background-position: 0 0;
-        }
-        100% {
-          background-position: 1128px 0;
-        }
+        height: 12px;
+        background: rgba(66, 184, 131, 0.2);
+        z-index: -1;
       }
     }
-    &_catch {
-      position: relative;
-      z-index: 2;
-      height: 770px;
-      display: flex;
-      & > div {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 0 46px;
-      }
-      .hero_left {
-        flex-wrap: wrap;
-        // color: #4e5064;
-        color: var(--text-color);
+  }
 
-        &_title {
-          font-size: 45px;
-          font-weight: bold;
-          display: flex;
-        }
-        &_text {
-          margin-top: 5px;
-          font-size: 30px;
-          line-height: 40px;
-          opacity: 0.8;
+  .subtitle {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 500px;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 60px;
+
+    .cta-btn {
+      font-weight: 600;
+      padding: 22px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: translateY(-3px);
+      }
+
+      &.secondary {
+        border-color: #e0e0e0;
+        color: #555;
+        background: white;
+        &:hover {
+          border-color: #42b883;
+          color: #42b883;
         }
       }
     }
   }
 
-  .xm {
-    border-radius: 1rem;
-    border: solid 4px #313131;
-    background-color: #fff;
-    box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    // height: 100px;
-    &_header {
-      position: relative;
-      padding: 0.5em;
-      font-size: 1.75rem;
-      letter-spacing: 0.1em;
-      text-align: center;
-      color: #fff;
-      background-color: #62a366;
-      border-bottom: solid 4px #313131;
-      border-radius: 0.7rem 0.7rem 0 0;
-      .deco {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 1em;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 0.75rem;
-        align-items: center;
+  .stats-row {
+    display: flex;
+    gap: 50px;
+    border-top: 1px solid #eee;
+    padding-top: 30px;
 
-        &::after,
-        &::before {
-          content: "";
-          display: block;
-          width: 1rem;
-          aspect-ratio: 1 / 1;
-          border-radius: 50%;
-        }
-        &::after {
-          background-color: #eecb90;
-        }
-        &::before {
-          background-color: #9dd2ed;
-        }
+    .stat-item {
+      h3 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2c3e50;
+      }
+      p {
+        font-size: 14px;
+        color: #999;
+        margin-top: 5px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
     }
+  }
+}
 
-    &_content {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-gap: 2rem;
-      gap: 2rem;
-      padding: 30px;
-      &_item {
-        color: var(--text-color);
-        border-radius: 1rem;
-        border: solid 4px #313131;
-        background-color: var(--bg-color);
-        box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.1);
-        transition: all 0.4s ease-out;
-        cursor: pointer;
-        &:hover {
-          border-color: #448547;
-          transform: translateY(-10px);
-        }
-        &_wrap {
-          img {
-            width: 100%;
-            height: 267px;
-            display: block;
-            // aspect-ratio: 360 / 240;
-            border-radius: 0.7rem 0.7rem 0 0;
-            overflow: hidden;
-            object-fit: cover;
-          }
-        }
-      }
-      &_item:nth-child(1),
-      &_item:nth-child(2) {
-        grid-row: 1 / 3;
-      }
+.visual-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // 给 HomeRight 加一个悬浮效果
+  animation: hover-visual 6s ease-in-out infinite;
+}
+
+@keyframes hover-visual {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@media (max-width: 900px) {
+  .content-wrapper {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-top: 100px; // 避开 Navbar
+  }
+
+  .text-section {
+    order: 2; // 手机端文字在下
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title {
+      font-size: 42px;
     }
+    .stats-row {
+      justify-content: center;
+    }
+  }
+
+  .visual-section {
+    order: 1;
+    margin-bottom: -40px;
+    transform: scale(0.8);
   }
 }
 </style>
