@@ -31,7 +31,7 @@
         <CheckTheme />
         <div class="login_info_wrapper">
           <div class="info_wrapper" v-if="userStore.token">
-            <div>{{ userStore.userInfo?.username }}</div>
+            <div>{{ userStore.userInfo?.email }}</div>
             <div
               @click="userStore.clearUser()"
               style="font-size: 12px; color: #0078d4; cursor: pointer"
@@ -75,7 +75,6 @@ import CheckTheme from "./CheckTheme.vue";
 
 import useGlobalStore from "@/store/globalStore";
 import { list, ListItem } from "@/views/navList";
-import { noteList, noteItem } from "@/views/note/noteList";
 
 const router = useRouter();
 const route = useRoute();
@@ -110,7 +109,6 @@ const barList: ListItem[] = reactive([
     title: "笔记",
     router: "/note",
     childrenShowNav: true,
-    children: noteList,
   },
 
   { id: 6, title: "其他", router: "/other12" },
@@ -179,7 +177,7 @@ const checkMobileOpen = () => {
   isOpenMobileBar.value = !isOpenMobileBar.value;
 };
 
-const findIndexByRouter = (list: ListItem[] | noteItem[], router: string) => {
+const findIndexByRouter = (list: ListItem[], router: string) => {
   for (let i = 0; i < list.length; i++) {
     if (list[i].router === router) {
       return i;

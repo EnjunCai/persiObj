@@ -61,6 +61,12 @@ import HomeRight from "@/views/home/components/HomeRight/index.vue";
 
 import { list, ListItem } from "../navList";
 
+import useUserStore from "@/store/user";
+
+const userStore = useUserStore();
+
+console.log(userStore.userInfo);
+
 const router = useRouter();
 
 const WaterFullColumn = ref(3);

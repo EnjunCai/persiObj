@@ -1,6 +1,6 @@
 import { reactive } from "vue";
 
-import { noteList, noteItem } from "./note/noteList";
+import { noteItem } from "./note/noteList";
 
 export interface ListItem {
   id?: number | string;
