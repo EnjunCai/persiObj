@@ -1,366 +1,230 @@
 <template>
-  <div class="navigation_wrapper">
-    <div class="item_wrapper" v-for="(item, index) in list" :key="item.id">
+  <div class="navigation_wrapper" v-loading="loading">
+    <div class="item_wrapper" v-for="item in navList" :key="item.id">
       <div class="label">{{ item.title }}</div>
-      <div class="itemChildren_wrapper">
+
+      <div class="grid_container">
         <div
-          v-for="(itemC, indexC) in item.children"
-          :key="itemC.id"
+          v-for="child in item.children"
+          :key="child.id"
           class="card_wrapper"
         >
-          <div class="card">
-            <a class="card1" :href="itemC.link" target="_black">
-              <div class="card_content">
-                <!-- <div v-if="itemC.img">
-                  <img :src="itemC.img" />
-                </div> -->
-                <div>
-                  <p>{{ itemC.title }}</p>
-                  <p class="small">{{ itemC.text }}</p>
-                </div>
+          <a class="card" :href="child.link" target="_blank">
+            <div class="card_content">
+              <img v-if="child.img" :src="child.img" class="card_icon" />
+              <div class="text_content">
+                <p class="title">{{ child.title }}</p>
+                <p class="desc">{{ child.text }}</p>
               </div>
-              <div class="go-corner" href="#">
-                <div class="go-arrow">
-                  <el-icon color="#4e5064"><ArrowRightBold /></el-icon>
-                </div>
+            </div>
+
+            <div class="go-corner">
+              <div class="go-arrow">
+                <el-icon><ArrowRightBold /></el-icon>
               </div>
-            </a>
-          </div>
+            </div>
+          </a>
         </div>
       </div>
+    </div>
+
+    <div v-if="!loading && navList.length === 0" class="empty">
+      <img src="@/assets/images/no-data.svg" alt="No Data" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-const list = ref([
-  {
-    title: "开发小工具",
-    id: "n1",
-    children: [
-      {
-        id: "n1_1",
-        title: "JsonToAny",
-        text: "根据对象内容快速生成Ts",
-        img: "",
-        link: "https://xiets.gitee.io/json-to-any-web/",
-      },
-      {
-        id: "n1_2",
-        title: "零代码工具箱",
-        text: "包括 css（新拟态风格、玻璃风格、渐变、卡片按钮样式、阴影） 快速的可视化生成",
-        img: "",
-        link: "https://lingdaima.com/",
-      },
-      {
-        id: "n1_3",
-        title: "JSONPlaceholder",
-        text: "虚拟数据接口",
-        img: "",
-        link: "https://jsonplaceholder.typicode.com/",
-      },
+import { ref, onMounted } from "vue";
+import { supabase } from "@/lib/supabase";
 
-      {
-        id: "n1_4",
-        title: "i Hate Regex",
-        text: "正则匹配小工具",
-        img: "",
-        link: "https://ihateregex.io/",
-      },
-      {
-        id: "n1_5",
-        title: "Squoosh",
-        text: "压缩图片",
-        img: "",
-        link: "https://squoosh.app/",
-      },
-      {
-        id: "n1_5",
-        title: "CODELF",
-        text: "变量命名",
-        img: "",
-        link: "https://unbug.github.io/codelf/",
-      },
+// 定义接口类型
+interface NavChild {
+  id: string;
+  title: string;
+  text: string;
+  link: string;
+  img?: string;
+}
 
-      {
-        id: "n1_6",
-        title: "Lorem Picsum",
-        text: "生成随机图片的地址",
-        img: "",
-        link: "https://picsum.photos/",
-      },
-    ],
-  },
-  {
-    title: "不错的组件库和设计网站",
-    id: "n2",
-    children: [
-      {
-        id: "n2_1",
-        title: "UIDesignDaily",
-        text: "前端配色和一些设计思路参考",
-        img: "",
-        link: "https://www.uidesigndaily.com/",
-      },
-      {
-        id: "n2_2",
-        title: "NavNav+",
-        text: "前端原生的一些样式和效果",
-        img: "",
-        link: "https://navnav.co/",
-      },
-      {
-        id: "n2_3",
-        title: "uiverse",
-        text: "前端原生的一些样式和效果",
-        img: "",
-        link: "https://uiverse.io/",
-      },
-      {
-        id: "n2_4",
-        title: "pixso",
-        text: "页面设计参考",
-        img: "",
-        link: "https://pixso.cn/",
-      },
-    ],
-  },
-  {
-    title: "chatGPT",
-    id: "n3",
-    children: [
-      {
-        id: "n3_1",
-        title: "chatGPT1",
-        text: "可免费使用",
-        img: "",
-        link: "https://qhh25w.aitianhu1.top/",
-      },
-    ],
-  },
-  {
-    title: "视频",
-    id: "n4",
-    children: [
-      {
-        id: "n4_1",
-        title: "cokemv",
-        text: "免费视频网站",
-        img: "",
-        link: "https://cokemv.fun/",
-      },
-    ],
-  },
-  {
-    title: "游戏资源",
-    id: "n5",
-    children: [
-      {
-        id: "n5_1",
-        title: "游戏天堂",
-        text: "游戏资源",
-        img: "",
-        link: "https://www.zzzzz688.com/",
-      },
-      {
-        id: "n5_2",
-        title: "CoolGame",
-        text: "游戏资源",
-        img: "",
-        link: "https://www.ifun.cool/",
-      },
-      {
-        id: "n5_3",
-        title: "flysheep",
-        text: "游戏资源",
-        img: "",
-        link: "https://www.flysheep6.com/",
-      },
-    ],
-  },
-  {
-    title: "其他",
-    id: "n6",
-    children: [
-      {
-        id: "n1_1",
-        title: "JsonToAny",
-        text: "根据对象内容快速生成Ts",
-        img: "",
-        link: "https://xiets.gitee.io/json-to-any-web/",
-      },
-    ],
-  },
-]);
+interface NavCategory {
+  id: number;
+  title: string;
+  children: NavChild[];
+}
+
+const navList = ref<NavCategory[]>([]);
+const loading = ref(true);
+
+const fetchNav = async () => {
+  try {
+    // 按创建时间正序排列（也就是你插入的顺序）
+    const { data, error } = await supabase
+      .from("nav_collection")
+      .select("*")
+      .order("id", { ascending: true });
+
+    if (error) throw error;
+    navList.value = data || [];
+  } catch (err) {
+    console.error("获取导航失败", err);
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchNav();
+});
 </script>
 
 <style scoped lang="scss">
 .navigation_wrapper {
   padding: 50px;
+  min-height: 100vh;
 
   .item_wrapper {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+
     .label {
-      font-size: 22px;
-      color: var(--text-color);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-color); // 适配暗黑模式
+      margin-bottom: 20px;
+      padding-left: 10px;
+      border-left: 4px solid #42b883; // 加个 Vue 绿的小装饰
     }
 
-    .itemChildren_wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: stretch;
-      margin-top: 15px;
-      margin-right: -15px;
+    // --- 核心修改：使用 Grid 布局替代原本的 Flex + calc ---
+    .grid_container {
+      display: grid;
+      // 自动填充：每列最小 260px，空间不够自动换行，空间够自动拉伸
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
 
-      .card_wrapper {
-        width: 20%;
-        padding: 10px 15px 10px 0;
+    .card {
+      display: block;
+      position: relative;
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      height: 100%; // 保证 Grid 同一行高度一致
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+      text-decoration: none;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      box-sizing: border-box;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+        border-color: #bcdfd7;
+
+        // 标题变色
+        .text_content .title {
+          color: #42b883;
+        }
+
+        // 圆圈放大动画
+        &:before {
+          transform: scale(30);
+        }
       }
-      .card {
-        height: 100%;
-        .card1 {
-          display: block;
-          position: relative;
-          background-color: #fff;
-          border-radius: 4px;
-          height: 100%;
 
-          padding: 30px 30px;
-          box-shadow: 0px 14px 40px 0px rgba(109, 141, 173, 0.25);
-          text-decoration: none;
-          z-index: 0;
-          overflow: hidden;
-          .card_content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            img {
-              width: 30px;
-              border-radius: 8px;
-            }
-          }
+      // 背景装饰圆圈
+      &:before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        top: -16px;
+        right: -16px;
+        background: #bcdfd7;
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        transform-origin: 50% 50%;
+        transition: transform 0.4s ease-out;
+        opacity: 0.3; // 稍微透明一点，不挡文字
+      }
 
-          &:before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            top: -16px;
-            right: -16px;
-            background: #bcdfd7;
-            height: 32px;
-            width: 32px;
-            border-radius: 32px;
-            transform: scale(1);
-            transform-origin: 50% 50%;
-            transition: transform 0.25s ease-out;
-          }
-          &:hover:before {
-            transform: scale(30);
-          }
+      .card_content {
+        position: relative;
+        z-index: 1; // 保证在装饰层上面
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
 
-          p {
-            font-size: 17px;
-            font-weight: 400;
-            line-height: 20px;
-            color: #4e5064;
-          }
+        .card_icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          object-fit: cover;
+        }
 
-          p.small {
-            font-size: 14px;
-            margin-top: 5px;
+        .text_content {
+          .title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 6px;
+            transition: color 0.3s;
           }
-
-          .go-corner {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            width: 32px;
-            height: 32px;
+          .desc {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.4;
+            // 限制显示两行，超出省略
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            top: 0;
-            right: 0;
-            background-color: #bcdfd7;
-            border-radius: 0 4px 0 32px;
-          }
-          .go-arrow {
-            margin-top: -4px;
-            margin-right: -4px;
-            color: white;
-            font-family: courier, sans;
           }
         }
       }
 
-      .card1:hover p {
-        transition: all 0.3s ease-out;
-      }
+      // 右上角箭头区域
+      .go-corner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 32px;
+        height: 32px;
+        background-color: #bcdfd7;
+        border-radius: 0 12px 0 12px; // 顺应卡片的圆角
+        z-index: 1;
 
-      .card1:hover h3 {
-        transition: all 0.3s ease-out;
-      }
-    }
-  }
-}
-
-@media (max-width: 1280px) {
-  .navigation_wrapper {
-    .item_wrapper {
-      .itemChildren_wrapper {
-        .card_wrapper {
-          width: 25%;
+        .go-arrow {
+          color: #fff;
+          font-size: 14px;
+          transform: rotate(-45deg); // 箭头稍微斜一点更有设计感
         }
       }
     }
   }
-}
 
-@media (max-width: 900px) {
-  .navigation_wrapper {
-    .item_wrapper {
-      .itemChildren_wrapper {
-        .card_wrapper {
-          width: 33.3333333%;
-        }
-      }
+  .empty {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    img {
+      width: 200px;
+      opacity: 0.5;
     }
   }
 }
 
-@media (max-width: 768px) {
-  .navigation_wrapper {
-    .item_wrapper {
-      .itemChildren_wrapper {
-        .card_wrapper {
-          width: 50%;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 568px) {
-  .navigation_wrapper {
-    .item_wrapper {
-      .itemChildren_wrapper {
-        .card_wrapper {
-          width: 100%;
-        }
-      }
-    }
-  }
-}
-
+// 移动端适配：Grid 会自动处理，这里只需要微调边距
 @media (max-width: 450px) {
   .navigation_wrapper {
     padding: 20px;
-    .item_wrapper {
-      .itemChildren_wrapper {
-        .card_wrapper {
-          width: 100%;
-        }
-      }
+
+    .grid_container {
+      grid-template-columns: 1fr; // 手机端强制一列
     }
   }
 }
