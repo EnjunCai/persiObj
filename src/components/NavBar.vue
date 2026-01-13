@@ -1,21 +1,38 @@
 <template>
-  <div class="navbar-wrapper" :class="{ scrolled: isScrolled }">
+  <div 
+    class="navbar-wrapper" 
+    :class="{ scrolled: isScrolled }"
+    v-motion
+    :initial="{ y: -100, opacity: 0 }"
+    :enter="{ y: 0, opacity: 1, transition: { duration: 800, type: 'spring', stiffness: 250, damping: 25 } }"
+  >
     <div class="navbar-content">
+      
       <div class="logo" @click="router.push('/')">
-        <img src="@/assets/vue.svg" alt="Logo" class="logo-img" />
+        <img 
+          src="@/assets/vue.svg" 
+          alt="Logo" 
+          class="logo-img" 
+          v-motion
+          :hover="{ rotate: 360, transition: { duration: 800 } }"
+        />
         <span class="logo-text">Enjun's Space</span>
       </div>
 
       <div class="menu">
         <div
-          v-for="item in menuList"
+          v-for="(item, index) in menuList"
           :key="item.path"
           class="menu-item"
           :class="{ active: isActive(item.path) }"
           @click="handleNavigate(item)"
+      
+          v-motion
+          :initial="{ opacity: 0, y: -20 }"
+          :enter="{ opacity: 1, y: 0, transition: { delay: 200 + index * 100, duration: 500, type: 'spring' } }"
         >
-          <span>{{ item.label }}</span>
-          <div class="active-bar"></div>
+          <span class="menu-text">{{ item.label }}</span>
+          <div class="active-glow"></div>
         </div>
       </div>
 
@@ -23,9 +40,12 @@
         <div v-if="!userStore.userInfo">
           <el-button
             type="primary"
-            size="small"
+            class="login-btn"
             round
             @click="router.push('/login')"
+            v-motion
+            :hover="{ scale: 1.05 }"
+            :tap="{ scale: 0.95 }"
           >
             登录 / 注册
           </el-button>
@@ -48,9 +68,7 @@
 
           <template #dropdown>
             <el-dropdown-menu class="custom-dropdown">
-              <el-dropdown-item command="admin" icon="Setting"
-                >管理中心</el-dropdown-item
-              >
+              <el-dropdown-item command="admin" icon="Setting">管理中心</el-dropdown-item>
               <el-dropdown-item
                 divided
                 command="logout"
@@ -71,7 +89,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import useUserStore from "@/store/user";
-import { ArrowDown, Setting, SwitchButton } from "@element-plus/icons-vue"; // 引入图标
+import { ArrowDown, Setting, SwitchButton } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 
 const router = useRouter();
@@ -81,7 +99,6 @@ const userStore = useUserStore();
 // 滚动监听状态
 const isScrolled = ref(false);
 
-// 导航菜单配置 (按你要求的顺序)
 const menuList = [
   { label: "首页", path: "/home", name: "home" },
   { label: "笔记", path: "/note", name: "note" },
@@ -90,11 +107,9 @@ const menuList = [
   { label: "娱乐", path: "/game", name: "game" },
 ];
 
-// 路由高亮判断
 const isActive = (path: string) => {
   if (path === "/" && route.path === "/") return true;
   if (path === "/") return false;
-  // 包含匹配，例如 /noteInfo/1 也会高亮 /note
   return (
     route.path.startsWith(path) ||
     (path === "/note" && route.path.includes("note"))
@@ -105,13 +120,12 @@ const handleNavigate = (item: any) => {
   router.push(item.path);
 };
 
-// 下拉菜单指令处理
 const handleCommand = async (command: string) => {
   if (command === "logout") {
     try {
       await userStore.logout();
       ElMessage.success("已退出登录");
-      router.push("/login"); // 退出后跳回登录页或首页
+      router.push("/login");
     } catch (error) {
       ElMessage.error("退出失败");
     }
@@ -120,9 +134,9 @@ const handleCommand = async (command: string) => {
   }
 };
 
-// 滚动效果
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 20;
+  // 阈值设为 50，滚动一点点就开始变化
+  isScrolled.value = window.scrollY > 50;
 };
 
 onMounted(() => {
@@ -140,16 +154,20 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   width: 100%;
-  height: 64px;
+  height: 70px; /* 稍微加高一点，显得大气 */
   z-index: 999;
-  transition: all 0.3s ease-in-out;
-  background: rgba(255, 255, 255, 0.7); // 默认高透
-  backdrop-filter: blur(10px); // 毛玻璃效果
-  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* 初始状态：完全透明，靠内容撑起视觉 */
+  background: transparent;
+  
+  /* 滚动后的状态：变为磨砂白 */
   &.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    height: 60px; /* 滚动后稍微变窄一点，节省空间 */
   }
 
   .navbar-content {
@@ -159,60 +177,77 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 24px;
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       cursor: pointer;
 
       .logo-img {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
+        transition: transform 0.3s;
       }
       .logo-text {
-        font-size: 20px;
-        font-weight: 700;
-        color: #333;
+        font-size: 22px;
+        font-weight: 800;
+        color: #2c3e50;
         letter-spacing: -0.5px;
+        background: linear-gradient(120deg, #2c3e50, #42b883);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
     }
 
     .menu {
       display: flex;
-      gap: 32px;
+      gap: 40px; /* 增加间距，更透气 */
 
       .menu-item {
         position: relative;
         cursor: pointer;
         font-size: 16px;
-        color: #555;
+        color: #57606a;
         font-weight: 500;
+        padding: 8px 0;
         transition: color 0.3s;
-        padding: 5px 0;
 
-        &:hover,
-        &.active {
+        /* 文字悬浮变色 */
+        &:hover {
           color: #42b883;
         }
-
-        // 底部高亮条动画
-        .active-bar {
-          position: absolute;
-          bottom: -20px; // 距离文字的距离
-          left: 50%;
-          transform: translateX(-50%) scaleX(0);
-          width: 20px;
-          height: 3px;
-          background: #42b883;
-          border-radius: 4px;
-          transition: transform 0.3s ease;
+        &.active {
+          color: #42b883;
+          font-weight: 600;
         }
 
-        &.active .active-bar {
-          bottom: -22px; // 对齐 navbar 底部
-          transform: translateX(-50%) scaleX(1.5);
+        /* 底部光晕条 (代替原来的 active-bar) */
+        .active-glow {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%) scaleX(0);
+          width: 24px;
+          height: 4px;
+          background: #42b883;
+          border-radius: 4px;
+          box-shadow: 0 2px 10px rgba(66, 184, 131, 0.5); /* 绿色荧光 */
+          transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* 弹性过渡 */
+          opacity: 0;
+        }
+
+        /* 激活状态和悬浮状态都显示光晕 */
+        &.active .active-glow {
+          transform: translateX(-50%) scaleX(1);
+          opacity: 1;
+        }
+        
+        /* 鼠标移上去也显示一点点，作为提示 */
+        &:hover .active-glow {
+          transform: translateX(-50%) scaleX(0.5);
+          opacity: 0.6;
         }
       }
     }
@@ -220,31 +255,47 @@ onUnmounted(() => {
     .actions {
       display: flex;
       align-items: center;
+      
+      .login-btn {
+        background: #42b883;
+        border: none;
+        font-weight: 600;
+        padding: 18px 24px; /* 按钮做大一点 */
+        box-shadow: 0 4px 15px rgba(66, 184, 131, 0.3);
+        &:hover {
+          background: #3aa876;
+        }
+      }
 
-      // 用户头像触发区样式
       .user-avatar-trigger {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         cursor: pointer;
-        padding: 4px 8px;
-        border-radius: 20px;
-        transition: background 0.3s;
+        padding: 6px 12px;
+        border-radius: 30px;
+        transition: all 0.3s;
+        border: 1px solid transparent;
 
         &:hover {
-          background: rgba(0, 0, 0, 0.05);
+          background: rgba(255, 255, 255, 0.8);
+          border-color: rgba(0,0,0,0.05);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .avatar-img {
-          background: #42b883;
+          background: linear-gradient(135deg, #42b883 0%, #35495e 100%);
           font-weight: 600;
           color: white;
+          border: 2px solid white; /* 给头像加个白边 */
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .username {
-          font-size: 14px;
+          font-size: 15px;
+          font-weight: 600;
           color: #333;
-          max-width: 100px;
+          max-width: 120px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -254,7 +305,6 @@ onUnmounted(() => {
   }
 }
 
-// 移动端适配：隐藏中间菜单
 @media (max-width: 768px) {
   .navbar-wrapper .navbar-content .menu {
     display: none;

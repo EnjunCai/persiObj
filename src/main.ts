@@ -7,7 +7,7 @@ import i18n from "./i18n/index";
 
 import router from "./router";
 
-
+import { MotionPlugin } from '@vueuse/motion'
 // pinia
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
@@ -55,7 +55,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 // 切换路由顶部进度条
 setupRouterGuard(router);
 
-
+app.use(MotionPlugin)
 app.use(i18n);
 app.use(router);
 app.use(pinia);
