@@ -13,13 +13,18 @@
     "skipLibCheck": true,
     "noEmit": true,
     "allowJs": true,
+    "checkJs": false,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
-  }
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.js"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.js"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
